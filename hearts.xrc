@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
 
+  <object class="wxIcon" name="APP_ICON">wxhearts.png</object>
+
   <object class="wxDialog" name="DLG_SCORE">
     <title>Score Sheet</title>
+    <icon>wxhearts.png</icon>
     <size>400,250</size>
     <style>wxDEFAULT_DIALOG_STYLE</style>
     <object class="wxBoxSizer">
@@ -27,6 +30,7 @@
 
   <object class="wxDialog" name="DLG_QUOTE">
     <title>Quote for The Microsoft Hearts Network</title>
+    <icon>wxhearts.png</icon>
     <size>350,160</size>
     <style>wxDEFAULT_DIALOG_STYLE</style>
     <object class="wxBoxSizer">
@@ -60,6 +64,7 @@
 
   <object class="wxDialog" name="DLG_WELCOME">
     <title>The Microsoft Hearts Network</title>
+    <icon>wxhearts.png</icon>
     <size>400,120</size>
     <style>wxDEFAULT_DIALOG_STYLE</style>
     <object class="wxBoxSizer">
@@ -114,6 +119,7 @@
 
   <object class="wxDialog" name="DLG_OPTIONS">
     <title>Hearts Options</title>
+    <icon>wxhearts.png</icon>
     <size>350,280</size>
     <style>wxDEFAULT_DIALOG_STYLE</style>
     <object class="wxBoxSizer">

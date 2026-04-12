@@ -68,7 +68,7 @@ if(APPLE)
     )
 
     foreach(WAV glass.wav timpani.wav quote2.wav)
-        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../${WAV})
+        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${WAV})
             add_custom_command(TARGET wxhearts POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
                     ${CMAKE_CURRENT_SOURCE_DIR}/${WAV}
@@ -94,8 +94,8 @@ elseif(UNIX)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/hearts.xrc
             DESTINATION share/wxhearts)
     foreach(WAV glass.wav timpani.wav quote2.wav)
-        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../${WAV})
-            install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../${WAV}
+        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${WAV})
+            install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${WAV}
                     DESTINATION share/wxhearts)
         endif()
     endforeach()
@@ -113,10 +113,10 @@ elseif(WIN32)
             $<TARGET_FILE_DIR:wxhearts>/hearts.xrc
     )
     foreach(WAV glass.wav timpani.wav quote2.wav)
-        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../${WAV})
+        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${WAV})
             add_custom_command(TARGET wxhearts POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../${WAV}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/${WAV}
                     $<TARGET_FILE_DIR:wxhearts>/${WAV}
             )
         endif()
