@@ -1,0 +1,35 @@
+/********************************************************************/
+/*      WXHEARTS.RCV                                                */
+/********************************************************************/
+
+#if defined(_WIN32_WCE) || defined(UNDER_CE)
+#include <winver.h>
+#else
+#include <ntverp.h>
+#endif
+
+#define VER_INTERNALNAME_STR            "WXHEARTS"
+#define VER_ORIGINALFILENAME_STR        "WXHEARTS.EXE"
+#define VER_FILEDESCRIPTION_STR         "The Microsoft Hearts Network (wxWidgets port)"
+#define VER_FILETYPE                    VFT_APP
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_LEGALCOPYRIGHT_YEARS        "1991-2026"
+
+#ifndef VER_FILEFLAGSMASK
+#define VER_FILEFLAGSMASK 0x3F
+#endif
+
+#ifndef VER_FILEFLAGS
+#define VER_FILEFLAGS VS_FFI_FILEFLAGSMASK
+#endif
+
+#ifndef VER_FILEOS
+#define VER_FILEOS VOS__WINDOWS32
+#endif
+
+#ifndef VER_COMPANYNAME_STR
+#define VER_COMPANYNAME_STR "Microsoft"
+#endif
+
+#include "common.ver"
+

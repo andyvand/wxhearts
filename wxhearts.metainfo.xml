@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+ <id>com.mshearts.wxhearts</id>
+ <metadata_license>CC-BY-SA-3.0</metadata_license>
+ <project_license>GPL-2.0</project_license>
+ <content_rating type="oars-1.1"/>
+ <name>wxhearts</name>
+ <developer id="com.mshearts">
+  <name>wxhearts</name>
+ </developer>
+ <summary>Microsoft Hearts, a card game</summary>
+ <description>
+  <p>
+    Microsoft Hearts is a card game.
+  </p>
+ </description>
+ <launchable type="desktop-id">wxhearts.desktop</launchable>
+ <releases>
+   <release version="1.0.0" date="2026-04-12"/>
+ </releases>
+ <url type="homepage">https://github.com/andyvand/wxhearts</url>
+ <url type="bugtracker">https://github.com/andyvand/wxhearts/issues</url>
+ <update_contact>andyvand@gmail.com</update_contact>
+</component>

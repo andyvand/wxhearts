@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
+
+  <object class="wxDialog" name="DLG_SCORE">
+    <title>Score Sheet</title>
+    <size>400,250</size>
+    <style>wxDEFAULT_DIALOG_STYLE</style>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel" name="scorePanel">
+          <size>400,200</size>
+        </object>
+        <flag>wxEXPAND|wxALL</flag>
+        <border>5</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxButton" name="wxID_OK">
+          <label>OK</label>
+          <default>1</default>
+        </object>
+        <flag>wxALIGN_CENTER|wxALL</flag>
+        <border>5</border>
+      </object>
+    </object>
+  </object>
+
+  <object class="wxDialog" name="DLG_QUOTE">
+    <title>Quote for The Microsoft Hearts Network</title>
+    <size>350,160</size>
+    <style>wxDEFAULT_DIALOG_STYLE</style>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          <label>I come not, friends, to steal away your hearts...</label>
+          <style>wxALIGN_CENTRE</style>
+        </object>
+        <flag>wxALL|wxEXPAND</flag>
+        <border>15</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          <label>- Julius Caesar, Act III, scene ii</label>
+          <style>wxALIGN_CENTRE</style>
+        </object>
+        <flag>wxALL|wxEXPAND</flag>
+        <border>10</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxButton" name="wxID_OK">
+          <label>OK</label>
+          <default>1</default>
+        </object>
+        <flag>wxALIGN_CENTER|wxALL</flag>
+        <border>10</border>
+      </object>
+    </object>
+  </object>
+
+  <object class="wxDialog" name="DLG_WELCOME">
+    <title>The Microsoft Hearts Network</title>
+    <size>400,120</size>
+    <style>wxDEFAULT_DIALOG_STYLE</style>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          <label>Welcome to the Microsoft Hearts Network.</label>
+        </object>
+        <flag>wxALL</flag>
+        <border>10</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <orient>wxHORIZONTAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>What is your name?</label>
+            </object>
+            <flag>wxALIGN_CENTER_VERTICAL|wxRIGHT</flag>
+            <border>5</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="IDC_YOURNAME">
+              <size>150,-1</size>
+              <maxlength>14</maxlength>
+            </object>
+            <flag>wxEXPAND</flag>
+          </object>
+        </object>
+        <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
+        <border>10</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStdDialogButtonSizer">
+          <object class="button">
+            <object class="wxButton" name="wxID_OK">
+              <label>OK</label>
+              <default>1</default>
+            </object>
+          </object>
+          <object class="button">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Quit</label>
+            </object>
+          </object>
+        </object>
+        <flag>wxALIGN_CENTER|wxALL</flag>
+        <border>5</border>
+      </object>
+    </object>
+  </object>
+
+  <object class="wxDialog" name="DLG_OPTIONS">
+    <title>Hearts Options</title>
+    <size>350,280</size>
+    <style>wxDEFAULT_DIALOG_STYLE</style>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxStaticBoxSizer">
+          <label>Animation speed</label>
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxRadioButton" name="IDC_SLOW">
+              <label>&amp;Slow</label>
+              <style>wxRB_GROUP</style>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxRadioButton" name="IDC_NORMAL">
+              <label>&amp;Normal</label>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxRadioButton" name="IDC_FAST">
+              <label>&amp;Fast</label>
+            </object>
+          </object>
+        </object>
+        <flag>wxALL|wxEXPAND</flag>
+        <border>10</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticBoxSizer">
+          <label>Computer player names</label>
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="IDC_NAME1">
+              <maxlength>14</maxlength>
+            </object>
+            <flag>wxBOTTOM|wxEXPAND</flag>
+            <border>3</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="IDC_NAME2">
+              <maxlength>14</maxlength>
+            </object>
+            <flag>wxBOTTOM|wxEXPAND</flag>
+            <border>3</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="IDC_NAME3">
+              <maxlength>14</maxlength>
+            </object>
+            <flag>wxEXPAND</flag>
+          </object>
+        </object>
+        <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND</flag>
+        <border>10</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStdDialogButtonSizer">
+          <object class="button">
+            <object class="wxButton" name="wxID_OK">
+              <label>OK</label>
+              <default>1</default>
+            </object>
+          </object>
+          <object class="button">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Cancel</label>
+            </object>
+          </object>
+        </object>
+        <flag>wxALIGN_CENTER|wxALL</flag>
+        <border>5</border>
+      </object>
+    </object>
+  </object>
+
+</resource>

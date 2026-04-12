@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=wxhearts
+GenericName=Microsoft Hearts
+Comment=Microsoft Hearts Card Game
+Exec=wxhearts %f
+Icon=wxhearts
+Categories=Game;Cards;
+Keywords=Cards;Microsoft;Hearts;

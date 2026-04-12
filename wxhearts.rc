@@ -1,0 +1,14 @@
+/***************************************************************************/
+/**                  Microsoft Windows                                    **/
+/**            Copyright(c) Microsoft Corp., 1991, 1992                   **/
+/***************************************************************************/
+
+#include <windows.h>
+
+#include "wxhearts.rcv"
+
+#ifndef NO_MANIFEST
+1 24 wxhearts.manifest
+#endif
+
+100   ICON    wxhearts.ico
