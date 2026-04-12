@@ -4,7 +4,7 @@ project(wxhearts LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(wxWidgets REQUIRED COMPONENTS core base xrc)
+find_package(wxWidgets REQUIRED COMPONENTS core base xrc html xml)
 include(${wxWidgets_USE_FILE})
 
 set(SOURCES
