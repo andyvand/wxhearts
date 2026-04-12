@@ -112,6 +112,11 @@ void CMainWindow::Shuffle()
     }
 
     DoSort();
+
+    // Ensure the full window is repainted via OnPaint().  The wxClientDC
+    // drawing above works on macOS/Windows but is unreliable on Linux/GTK3.
+    Refresh();
+    Update();
 }
 
 
