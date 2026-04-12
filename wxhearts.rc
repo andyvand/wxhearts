@@ -7,7 +7,7 @@
 
 #include "wxhearts.rcv"
 
-#ifndef NO_MANIFEST
+#ifdef EMBED_MANIFEST
 1 24 wxhearts.manifest
 #endif
 

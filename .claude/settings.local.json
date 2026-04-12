@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(cat)",
+      "Read(//tmp/**)",
+      "Bash(mkdir -p build)",
+      "Bash(cmake .. -DCMAKE_BUILD_TYPE=Debug)",
+      "Bash(ls /Users/andyvand/wxhearts/Makefile* /Users/andyvand/wxhearts/makefile* /Users/andyvand/wxhearts/CMakeLists.txt /Users/andyvand/wxhearts/*.xcodeproj)",
+      "Bash(wc:*)",
+      "Bash(ls -1 /Users/andyvand/wxhearts/bmp/*.bmp)",
+      "Bash(ls:*)",
+      "Bash(wxrc --version)",
+      "Bash(wx-config --utility=wxrc)",
+      "Bash(wxrc:*)",
+      "Bash(cmake:*)",
+      "Bash(timeout 5 build/wxhearts.app/Contents/MacOS/wxhearts)",
+      "Bash(gtimeout 5 build/wxhearts.app/Contents/MacOS/wxhearts)",
+      "Bash(open:*)",
+      "Bash(unzip -l /tmp/hearts.xrs)",
+      "Bash(unzip -p /tmp/hearts.xrs 'hearts.xrs$hearts.xrc')",
+      "Bash(build/bin2c /tmp/hearts.xrs /tmp/test_xrc_data.h xrc_data)"
+    ]
+  }
+}

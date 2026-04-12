@@ -65,7 +65,11 @@ static void ExtractWavFiles()
 
 bool CMainWindow::SoundInit()
 {
+#ifndef _WIN32
     return wxSound::IsPlaying() || true; // assume sound available
+#else
+    return true;
+#endif
 }
 
 

@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(wxWidgets REQUIRED COMPONENTS core base xrc html xml)
-include(${wxWidgets_USE_FILE})
+
+if(NOT WIN32)
+     include(${wxWidgets_USE_FILE})
+endif()
 
 set(SOURCES
     hearts.cpp
