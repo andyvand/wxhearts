@@ -8,13 +8,12 @@
 cards.cpp -- wxWidgets port of cards.c
 
 Card bitmap loading and drawing using wxBitmap.
-Loads BMP files from bmp/ directory next to the executable.
+Loads BMP files from compiled XRC resources (hearts.xrc).
 
 ****************************************************************************/
 
 #include "card.h"
-#include <wx/filename.h>
-#include <wx/stdpaths.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/image.h>
 
 /* Card bitmap filenames indexed by card ID.
@@ -37,25 +36,12 @@ static const wxChar* s_rankSuffix[13] = {
     wxT("j"), wxT("q"), wxT("k")
 };
 
-static wxString GetBmpDir()
-{
-#ifdef WXHEARTS_DATADIR
-    wxString resDir = wxT(WXHEARTS_DATADIR);
-#else
-    wxString resDir = wxStandardPaths::Get().GetResourcesDir();
-#endif
-    return resDir + wxFileName::GetPathSeparator() + wxT("bmp")
-           + wxFileName::GetPathSeparator();
-}
-
 bool card::LoadCardBitmaps()
 {
     if (m_bitmapsLoaded)
         return true;
 
-    wxString bmpDir = GetBmpDir();
-
-    /* Load the 52 card face bitmaps.
+    /* Load the 52 card face bitmaps from XRC resources.
        Card ID mapping: id = value * 4 + suit
        value: 0=Ace, 1=2, 2=3, ... 10=Jack, 11=Queen, 12=King
        suit:  0=clubs, 1=diamonds, 2=hearts, 3=spades
@@ -63,14 +49,13 @@ bool card::LoadCardBitmaps()
     for (int id = 0; id < 52; id++) {
         int suit  = id % 4;
         int value = id / 4;
-        wxString filename = bmpDir + s_suitPrefix[suit] + s_rankSuffix[value] + wxT(".bmp");
+        wxString resName = wxString(wxT("card_")) + s_suitPrefix[suit] + s_rankSuffix[value];
 
-        wxImage img;
-        if (!img.LoadFile(filename, wxBITMAP_TYPE_BMP)) {
-            wxLogError(wxT("Failed to load card bitmap: %s"), filename);
+        m_bmCard[id] = wxXmlResource::Get()->LoadBitmap(resName);
+        if (!m_bmCard[id].IsOk()) {
+            wxLogError(wxT("Failed to load card bitmap from XRC: %s"), resName);
             return false;
         }
-        m_bmCard[id] = wxBitmap(img);
     }
 
     /* Get card dimensions from first loaded bitmap */
@@ -79,29 +64,15 @@ bool card::LoadCardBitmaps()
         dyCrd = m_bmCard[0].GetHeight();
     }
 
-    /* Load card back bitmap */
-    wxString backFile = bmpDir + wxT("back.bmp");
-    {
-        wxImage img;
-        if (img.LoadFile(backFile, wxBITMAP_TYPE_BMP))
-            m_bmBack = wxBitmap(img);
-    }
+    /* Load card back bitmap from XRC */
+    m_bmBack = wxXmlResource::Get()->LoadBitmap(wxT("card_back"));
 
-    /* If no back.bmp, try one of the pattern backs */
-    if (!m_bmBack.IsOk()) {
-        backFile = bmpDir + wxT("rbhatch.bmp");
-        wxImage img;
-        if (img.LoadFile(backFile, wxBITMAP_TYPE_BMP))
-            m_bmBack = wxBitmap(img);
-    }
+    /* If no back, try the alternate pattern back */
+    if (!m_bmBack.IsOk())
+        m_bmBack = wxXmlResource::Get()->LoadBitmap(wxT("card_rbhatch"));
 
-    /* Load ghost bitmap */
-    wxString ghostFile = bmpDir + wxT("ghost.bmp");
-    {
-        wxImage img;
-        if (img.LoadFile(ghostFile, wxBITMAP_TYPE_BMP))
-            m_bmGhost = wxBitmap(img);
-    }
+    /* Load ghost bitmap from XRC */
+    m_bmGhost = wxXmlResource::Get()->LoadBitmap(wxT("card_ghost"));
 
     m_bitmapsLoaded = true;
     return true;

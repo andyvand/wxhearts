@@ -3,6 +3,76 @@
 
   <object class="wxIcon" name="APP_ICON">wxhearts.png</object>
 
+  <!-- Card bitmaps: clubs -->
+  <object class="wxBitmap" name="card_cla">bmp/cla.bmp</object>
+  <object class="wxBitmap" name="card_cl2">bmp/cl2.bmp</object>
+  <object class="wxBitmap" name="card_cl3">bmp/cl3.bmp</object>
+  <object class="wxBitmap" name="card_cl4">bmp/cl4.bmp</object>
+  <object class="wxBitmap" name="card_cl5">bmp/cl5.bmp</object>
+  <object class="wxBitmap" name="card_cl6">bmp/cl6.bmp</object>
+  <object class="wxBitmap" name="card_cl7">bmp/cl7.bmp</object>
+  <object class="wxBitmap" name="card_cl8">bmp/cl8.bmp</object>
+  <object class="wxBitmap" name="card_cl9">bmp/cl9.bmp</object>
+  <object class="wxBitmap" name="card_cl10">bmp/cl10.bmp</object>
+  <object class="wxBitmap" name="card_clj">bmp/clj.bmp</object>
+  <object class="wxBitmap" name="card_clq">bmp/clq.bmp</object>
+  <object class="wxBitmap" name="card_clk">bmp/clk.bmp</object>
+
+  <!-- Card bitmaps: diamonds -->
+  <object class="wxBitmap" name="card_dma">bmp/dma.bmp</object>
+  <object class="wxBitmap" name="card_dm2">bmp/dm2.bmp</object>
+  <object class="wxBitmap" name="card_dm3">bmp/dm3.bmp</object>
+  <object class="wxBitmap" name="card_dm4">bmp/dm4.bmp</object>
+  <object class="wxBitmap" name="card_dm5">bmp/dm5.bmp</object>
+  <object class="wxBitmap" name="card_dm6">bmp/dm6.bmp</object>
+  <object class="wxBitmap" name="card_dm7">bmp/dm7.bmp</object>
+  <object class="wxBitmap" name="card_dm8">bmp/dm8.bmp</object>
+  <object class="wxBitmap" name="card_dm9">bmp/dm9.bmp</object>
+  <object class="wxBitmap" name="card_dm10">bmp/dm10.bmp</object>
+  <object class="wxBitmap" name="card_dmj">bmp/dmj.bmp</object>
+  <object class="wxBitmap" name="card_dmq">bmp/dmq.bmp</object>
+  <object class="wxBitmap" name="card_dmk">bmp/dmk.bmp</object>
+
+  <!-- Card bitmaps: hearts -->
+  <object class="wxBitmap" name="card_hta">bmp/hta.bmp</object>
+  <object class="wxBitmap" name="card_ht2">bmp/ht2.bmp</object>
+  <object class="wxBitmap" name="card_ht3">bmp/ht3.bmp</object>
+  <object class="wxBitmap" name="card_ht4">bmp/ht4.bmp</object>
+  <object class="wxBitmap" name="card_ht5">bmp/ht5.bmp</object>
+  <object class="wxBitmap" name="card_ht6">bmp/ht6.bmp</object>
+  <object class="wxBitmap" name="card_ht7">bmp/ht7.bmp</object>
+  <object class="wxBitmap" name="card_ht8">bmp/ht8.bmp</object>
+  <object class="wxBitmap" name="card_ht9">bmp/ht9.bmp</object>
+  <object class="wxBitmap" name="card_ht10">bmp/ht10.bmp</object>
+  <object class="wxBitmap" name="card_htj">bmp/htj.bmp</object>
+  <object class="wxBitmap" name="card_htq">bmp/htq.bmp</object>
+  <object class="wxBitmap" name="card_htk">bmp/htk.bmp</object>
+
+  <!-- Card bitmaps: spades -->
+  <object class="wxBitmap" name="card_spa">bmp/spa.bmp</object>
+  <object class="wxBitmap" name="card_sp2">bmp/sp2.bmp</object>
+  <object class="wxBitmap" name="card_sp3">bmp/sp3.bmp</object>
+  <object class="wxBitmap" name="card_sp4">bmp/sp4.bmp</object>
+  <object class="wxBitmap" name="card_sp5">bmp/sp5.bmp</object>
+  <object class="wxBitmap" name="card_sp6">bmp/sp6.bmp</object>
+  <object class="wxBitmap" name="card_sp7">bmp/sp7.bmp</object>
+  <object class="wxBitmap" name="card_sp8">bmp/sp8.bmp</object>
+  <object class="wxBitmap" name="card_sp9">bmp/sp9.bmp</object>
+  <object class="wxBitmap" name="card_sp10">bmp/sp10.bmp</object>
+  <object class="wxBitmap" name="card_spj">bmp/spj.bmp</object>
+  <object class="wxBitmap" name="card_spq">bmp/spq.bmp</object>
+  <object class="wxBitmap" name="card_spk">bmp/spk.bmp</object>
+
+  <!-- Card back and ghost -->
+  <object class="wxBitmap" name="card_back">bmp/back.bmp</object>
+  <object class="wxBitmap" name="card_rbhatch">bmp/rbhatch.bmp</object>
+  <object class="wxBitmap" name="card_ghost">bmp/ghost.bmp</object>
+
+  <!-- Sound files (embedded as binary data, accessed via memory filesystem) -->
+  <object class="wxBitmap" name="snd_glass">glass.wav</object>
+  <object class="wxBitmap" name="snd_timpani">timpani.wav</object>
+  <object class="wxBitmap" name="snd_quote2">quote2.wav</object>
+
   <object class="wxDialog" name="DLG_SCORE">
     <title>Score Sheet</title>
     <icon>wxhearts.png</icon>
