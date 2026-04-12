@@ -37,6 +37,7 @@ set(HEADERS
 
 # Build bin2c host tool
 set(BIN2C ${CMAKE_BINARY_DIR}/bin2c)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(HostCompile)
 host_compile(${CMAKE_CURRENT_SOURCE_DIR}/bin2c.c ${BIN2C})
 
