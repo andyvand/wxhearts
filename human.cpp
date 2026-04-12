@@ -260,6 +260,11 @@ void local_human::PopCard(wxBrush &brush, int x, int y)
            card::dxCrd, card::dyCrd + POPSPACING,
            &memDC, 0, 0);
     memDC.SelectObject(wxNullBitmap);
+
+    // On Linux/GTK3, wxClientDC drawing is unreliable.  Force a
+    // repaint through OnPaint so PopDraw renders the offset correctly.
+    pMainWnd->Refresh();
+    pMainWnd->Update();
 }
 
 
