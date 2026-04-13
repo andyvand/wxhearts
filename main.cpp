@@ -19,6 +19,8 @@ Other CMainWindow member functions are in main2.cpp, welcome.cpp
 #include "main.h"
 #include "resource.h"
 #include <wx/aboutdlg.h>
+#include <wx/iconbndl.h>
+#include <wx/xrc/xmlres.h>
 #include "debug.h"
 
 #include <cstdlib>
@@ -113,6 +115,13 @@ CMainWindow::CMainWindow()
 
     m_bkgndcolor = wxColour(0, 127, 0);
     m_BgndBrush = wxBrush(m_bkgndcolor);
+
+    // Set window icon (title bar / taskbar / dock where applicable).
+    // On macOS, the Dock/Finder icon comes from the bundle's .icns file;
+    // on Windows and Linux this sets the frame icon from the embedded PNG.
+    wxIcon appIcon = wxXmlResource::Get()->LoadIcon(wxT("APP_ICON"));
+    if (appIcon.IsOk())
+        SetIcon(appIcon);
 
     // Create menu bar
 

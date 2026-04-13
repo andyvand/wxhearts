@@ -63,6 +63,7 @@ add_custom_command(
     COMMAND ${WXRC} -o ${XRC_XRS} ${CMAKE_CURRENT_SOURCE_DIR}/hearts.xrc
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/hearts.xrc ${BMP_FILES} ${WAV_FILES}
+            ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.png
     COMMENT "Compiling XRC resources to binary archive"
 )
 
