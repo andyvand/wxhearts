@@ -96,8 +96,15 @@ creates green background brush, and main hearts window
 ****************************************************************************/
 
 CMainWindow::CMainWindow()
+    // Use wxDefaultSize here; SetClientSize(WINWIDTH, WINHEIGHT) below
+    // fixes the client area to 540x600 *after* the menubar and status
+    // bar are created.  Passing an outer size to the wxFrame ctor
+    // makes the usable area platform-dependent: on Linux/GTK the menu
+    // bar and status bar live inside the outer frame, eating ~60px of
+    // vertical space, which pushed the bottom row of cards down and
+    // threw off the table proportions.
     : wxFrame(nullptr, wxID_ANY, GetStringResource(IDS_APPNAME),
-              wxDefaultPosition, wxSize(WINWIDTH, WINHEIGHT),
+              wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX),
       passdir(LEFT_DIR), bAnimating(false), bCheating(false), bSoundOn(false),
       bTimerOn(false), bConstructed(true), m_FatalErrno(0),
@@ -115,6 +122,17 @@ CMainWindow::CMainWindow()
 
     m_bkgndcolor = wxColour(0, 127, 0);
     m_BgndBrush = wxBrush(m_bkgndcolor);
+
+    // On wxGTK3 the windowing system asynchronously erases the
+    // background between EVT_ERASE_BACKGROUND and EVT_PAINT, which
+    // can leave the window painted green for one event-loop tick
+    // before the cards are drawn back on top.  Switching to
+    // wxBG_STYLE_PAINT tells the system that *all* painting is done
+    // in OnPaint, so the green table and the cards are committed in
+    // a single atomic repaint and the user never sees a bare green
+    // window.  OnEraseBkgnd is left in place as a fallback for ports
+    // that still deliver erase-background events.
+    SetBackgroundStyle(wxBG_STYLE_PAINT);
 
     // Set window icon (title bar / taskbar / dock where applicable).
     // On macOS, the Dock/Finder icon comes from the bundle's .icns file;
@@ -149,6 +167,16 @@ CMainWindow::CMainWindow()
     CreateStatusBar();
     SetStatusText(GetStringResource(IDS_INTRO));
 
+    // Now that the menubar and status bar exist, pin the *client*
+    // area to WINWIDTH x WINHEIGHT.  On GTK/Linux the menu bar and
+    // status bar are drawn inside the outer frame rectangle, so
+    // sizing the frame with wxSize(WINWIDTH, WINHEIGHT) in the ctor
+    // left the client area ~60px shorter than on Windows/macOS and
+    // the bottom row of cards rendered partially off-screen.  Using
+    // SetClientSize here makes the playable area identical across
+    // platforms regardless of decoration heights.
+    SetClientSize(WINWIDTH, WINHEIGHT);
+
     // Accelerator table
 
     wxAcceleratorEntry accel[6];
@@ -160,10 +188,13 @@ CMainWindow::CMainWindow()
     accel[5].Set(wxACCEL_NORMAL, WXK_ESCAPE, IDM_BOSSKEY);
     SetAcceleratorTable(wxAcceleratorTable(6, accel));
 
-    // Set up table rect
-
+    // Set up table rect.  Query the real status bar height instead of
+    // hard-coding 20px; GTK status bars are typically taller, and using
+    // a too-small value left m_TableRect extending under the status bar,
+    // pushing the pass button and bottom row of cards out of view.
     wxSize clientSize = GetClientSize();
-    m_StatusHeight = 20;            // approximate status bar height
+    wxStatusBar *sbar = GetStatusBar();
+    m_StatusHeight = (sbar ? sbar->GetSize().GetHeight() : 20);
     m_TableRect = wxRect(0, 0, clientSize.GetWidth(),
                          clientSize.GetHeight() - m_StatusHeight);
 
@@ -480,6 +511,18 @@ CMainWindow::OnPaint
 void CMainWindow::OnPaint(wxPaintEvent &event)
 {
     wxPaintDC dc(this);
+
+    // With wxBG_STYLE_PAINT the system no longer erases the background
+    // for us, so OnPaint must paint the green table itself.  Doing it
+    // here (rather than in OnEraseBkgnd) keeps background + cards in a
+    // single atomic repaint, which avoids the "all-green, no cards"
+    // flicker seen on Linux Mint / wxGTK3 after Refresh().
+    {
+        wxSize sz = GetClientSize();
+        dc.SetBrush(m_BgndBrush);
+        dc.SetPen(*wxTRANSPARENT_PEN);
+        dc.DrawRectangle(0, 0, sz.GetWidth(), sz.GetHeight());
+    }
 
     // During card animation, suppress repainting so wxClientDC drawing
     // is not overwritten.  The PaintDC must still be created above to

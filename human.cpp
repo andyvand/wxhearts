@@ -263,7 +263,18 @@ void local_human::PopCard(wxBrush &brush, int x, int y)
 
     // On Linux/GTK3, wxClientDC drawing is unreliable.  Force a
     // repaint through OnPaint so PopDraw renders the offset correctly.
-    pMainWnd->Refresh();
+    //
+    // Important: only invalidate the local human's hand area, and
+    // do *not* request an erase-background.  A full Refresh() with
+    // eraseBackground=true causes wxGTK3 to paint the entire window
+    // green via OnEraseBkgnd, and because OnPaint is then deferred
+    // (we are still inside the EVT_LEFT_DOWN handler), the user is
+    // left staring at an all-green window with no cards on it.
+    // Refreshing just the cover rect, with eraseBackground=false,
+    // lets OnPaint redraw atomically over the existing pixels.
+    wxRect refreshRect;
+    GetCoverRect(refreshRect);
+    pMainWnd->RefreshRect(refreshRect, false);
     pMainWnd->Update();
 }
 
