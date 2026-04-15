@@ -116,7 +116,12 @@ bool card::PopDraw(wxDC &dc)
 
 void card::Glide(wxDC &dc, int xEnd, int yEnd)
 {
-    /* Suppress OnPaint during animation so it doesn't overwrite frames */
+    (void)dc;   // animation draws into CMainWindow::m_backbuffer; the
+                // DC passed by callers (historically a wxClientDC on
+                // the main window) is no longer used -- see GlideStep.
+
+    /* Suppress scene re-render during animation so it doesn't overwrite
+       the frames GlideStep is writing into the backbuffer. */
     if (pMainWnd)
         pMainWnd->bAnimating = true;
 
@@ -142,53 +147,80 @@ void card::Glide(wxDC &dc, int xEnd, int yEnd)
     {
         int x2 = loc.x + (int)(((long)i * dx) / (long)steps);
         int y2 = loc.y + (int)(((long)i * dy) / (long)steps);
-        GlideStep(dc, x1, y1, x2, y2);
+        GlideStep(x1, y1, x2, y2);
         x1 = x2;
         y1 = y2;
     }
 
     /* Last step lands exactly on target */
-    GlideStep(dc, x1, y1, xEnd, yEnd);
+    GlideStep(x1, y1, xEnd, yEnd);
 
     loc.x = xEnd;
     loc.y = yEnd;
 
-    if (pMainWnd)
-        pMainWnd->bAnimating = false;
-}
-
-
-void card::GlideStep(wxDC &dc, int x1, int y1, int x2, int y2)
-{
-    wxMemoryDC memB, memB2;
-    memB.SelectObject(m_bmBgnd);
-    memB2.SelectObject(m_bmBgnd2);
-
-    /* Create background of new location */
-    memB2.Blit(0, 0, dxCrd, dyCrd, &dc, x2, y2);
-    memB2.Blit(x1-x2, y1-y2, dxCrd, dyCrd, &memB, 0, 0);
-
-    /* Draw old background where card was */
-    dc.Blit(x1, y1, dxCrd, dyCrd, &memB, 0, 0);
-
-    /* Draw card at new position */
-    wxMemoryDC fgDC;
-    fgDC.SelectObject(m_bmFgnd);
-    dc.Blit(x2, y2, dxCrd, dyCrd, &fgDC, 0, 0);
-    fgDC.SelectObject(wxNullBitmap);
-
-    /* Flush the wxClientDC drawing to screen.  OnPaint is suppressed
-       by bAnimating so Update() won't overwrite the animation frame. */
+    /* Animation finished.  Clear bAnimating and force one more paint
+       so OnPaint re-renders the scene from state (card now in its new
+       logical position).  Without this, the backbuffer would keep the
+       last animation frame until the next state-change-driven repaint,
+       which may include stale overlap artifacts. */
     if (pMainWnd)
     {
+        pMainWnd->bAnimating = false;
         pMainWnd->Refresh(false);
         pMainWnd->Update();
     }
+}
+
+
+void card::GlideStep(int x1, int y1, int x2, int y2)
+{
+    if (!pMainWnd || !pMainWnd->m_backbuffer.IsOk())
+        return;
+
+    /* Draw the animation frame directly into the main window's
+       backbuffer.  OnPaint will blit the backbuffer to the screen,
+       so this is the only path that reliably puts pixels on the
+       window under wxGTK3 (where wxClientDC writes are not committed
+       to the backing store that the compositor reads from). */
+    {
+        wxMemoryDC dc;
+        dc.SelectObject(pMainWnd->m_backbuffer);
+
+        wxMemoryDC memB, memB2;
+        memB.SelectObject(m_bmBgnd);
+        memB2.SelectObject(m_bmBgnd2);
+
+        /* Create background of new location */
+        memB2.Blit(0, 0, dxCrd, dyCrd, &dc, x2, y2);
+        memB2.Blit(x1-x2, y1-y2, dxCrd, dyCrd, &memB, 0, 0);
+
+        /* Draw old background where card was */
+        dc.Blit(x1, y1, dxCrd, dyCrd, &memB, 0, 0);
+
+        /* Draw card at new position */
+        wxMemoryDC fgDC;
+        fgDC.SelectObject(m_bmFgnd);
+        dc.Blit(x2, y2, dxCrd, dyCrd, &fgDC, 0, 0);
+        fgDC.SelectObject(wxNullBitmap);
+
+        memB.SelectObject(wxNullBitmap);
+        memB2.SelectObject(wxNullBitmap);
+        dc.SelectObject(wxNullBitmap);
+    }
+
+    /* Flush the backbuffer to screen via OnPaint.  bAnimating is
+       true, so OnPaint skips re-rendering the scene and just blits
+       the backbuffer we just wrote to.  Refresh only the rectangle
+       covering both old and new card positions to minimise work. */
+    int xMin = (x1 < x2) ? x1 : x2;
+    int yMin = (y1 < y2) ? y1 : y2;
+    int xMax = ((x1 > x2) ? x1 : x2) + dxCrd;
+    int yMax = ((y1 > y2) ? y1 : y2) + dyCrd;
+    wxRect rect(xMin, yMin, xMax - xMin, yMax - yMin);
+    pMainWnd->RefreshRect(rect, false);
+    pMainWnd->Update();
 
     /* Swap backgrounds */
-    memB.SelectObject(wxNullBitmap);
-    memB2.SelectObject(wxNullBitmap);
-
     wxBitmap temp = m_bmBgnd;
     m_bmBgnd = m_bmBgnd2;
     m_bmBgnd2 = temp;

@@ -109,6 +109,21 @@ public:
 public:
     bool     bAnimating;
 
+    // Persistent backbuffer.  All game drawing ultimately ends up in
+    // this bitmap, and OnPaint simply blits it to the window.  This
+    // decouples what's on screen from paint-event timing, which is
+    // what wxGTK3 needs -- wxClientDC writes there are not reliably
+    // committed to the window's backing store, so without a backbuffer
+    // Refresh()/Update() during animation would leave the window blank
+    // (or repainted green on top of the animation frame).
+    wxBitmap m_backbuffer;
+
+    // Render the current scene (green table + cards in their logical
+    // positions) into the supplied DC.  Used by OnPaint to refresh the
+    // backbuffer outside of animation, and callable from elsewhere to
+    // force a full re-render.
+    void     RenderScene(wxDC &dc);
+
 protected:
     wxButton *m_pButton;
     int      m_StatusHeight;

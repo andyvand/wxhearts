@@ -57,7 +57,7 @@ class card {
         static wxBitmap m_bmGhost;
         static bool     m_bitmapsLoaded;
 
-        void GlideStep(wxDC &dc, int x1, int y1, int x2, int y2);
+        void GlideStep(int x1, int y1, int x2, int y2);
         void SaveCorners(wxDC &dc, int x, int y);
         void RestoreCorners(wxDC &dc, int x, int y);
         int  IntSqrt(long square);

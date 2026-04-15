@@ -198,6 +198,21 @@ CMainWindow::CMainWindow()
     m_TableRect = wxRect(0, 0, clientSize.GetWidth(),
                          clientSize.GetHeight() - m_StatusHeight);
 
+    // Allocate the persistent backbuffer and pre-fill it with the
+    // green table colour.  OnPaint will refill it with the full scene
+    // on first paint; we pre-fill here so the window isn't white for
+    // the instant between show and first paint.
+    m_backbuffer = wxBitmap(clientSize.GetWidth(), clientSize.GetHeight());
+    if (m_backbuffer.IsOk())
+    {
+        wxMemoryDC mdc;
+        mdc.SelectObject(m_backbuffer);
+        mdc.SetBrush(m_BgndBrush);
+        mdc.SetPen(*wxTRANSPARENT_PEN);
+        mdc.DrawRectangle(0, 0, clientSize.GetWidth(), clientSize.GetHeight());
+        mdc.SelectObject(wxNullBitmap);
+    }
+
     // Seed random
 
     srand((unsigned)time(nullptr));
@@ -508,38 +523,15 @@ CMainWindow::OnPaint
 
 ****************************************************************************/
 
-void CMainWindow::OnPaint(wxPaintEvent &event)
+void CMainWindow::RenderScene(wxDC &dc)
 {
-    wxPaintDC dc(this);
-
-    // During card animation, do NOT paint anything -- not even the
-    // background.  GlideStep draws each frame directly through a
-    // wxClientDC and then calls Refresh(false) + Update() to flush it
-    // to the screen.  With wxBG_STYLE_PAINT we own the background, so
-    // if OnPaint painted the green table here it would immediately
-    // overwrite the animation frame the client DC just drew, and the
-    // early-return below would leave the window a solid green with no
-    // cards on it.  That is exactly the "click a card to play and the
-    // screen stays green" symptom seen on Linux Mint / wxGTK3.
-    //
-    // Returning without touching the DC (other than creating the
-    // PaintDC to consume the event) leaves the pixels the client DC
-    // rendered intact, which is what the MFC/Win32 version relied on
-    // via Refresh(false) suppressing the erase-background.
-    if (bAnimating)
-        return;
-
-    // With wxBG_STYLE_PAINT the system no longer erases the background
-    // for us, so OnPaint must paint the green table itself.  Doing it
-    // here (rather than in OnEraseBkgnd) keeps background + cards in a
-    // single atomic repaint, which avoids the "all-green, no cards"
-    // flicker seen on Linux Mint / wxGTK3 after Refresh().
-    {
-        wxSize sz = GetClientSize();
-        dc.SetBrush(m_BgndBrush);
-        dc.SetPen(*wxTRANSPARENT_PEN);
-        dc.DrawRectangle(0, 0, sz.GetWidth(), sz.GetHeight());
-    }
+    // Paint the green table background.  With wxBG_STYLE_PAINT the
+    // system will not erase the background for us, so we have to do
+    // it ourselves here.
+    wxSize sz = GetClientSize();
+    dc.SetBrush(m_BgndBrush);
+    dc.SetPen(*wxTRANSPARENT_PEN);
+    dc.DrawRectangle(0, 0, sz.GetWidth(), sz.GetHeight());
 
     // players must be painted in order starting with playerled so that
     // cards in centre overlap correctly
@@ -569,6 +561,44 @@ void CMainWindow::OnPaint(wxPaintEvent &event)
                 }
             }
         }
+    }
+}
+
+
+void CMainWindow::OnPaint(wxPaintEvent &event)
+{
+    wxPaintDC dc(this);
+
+    if (!m_backbuffer.IsOk())
+    {
+        // Degenerate fallback; shouldn't normally happen.
+        RenderScene(dc);
+        return;
+    }
+
+    // Outside of animation, refresh the backbuffer from the current
+    // game state.  During animation, leave the backbuffer alone --
+    // card::GlideStep writes each animation frame directly into it,
+    // and re-rendering the scene here would overwrite those frames
+    // with cards at their stale logical positions (the "screen stays
+    // green" / "screen goes white" symptoms seen on wxGTK3).
+    if (!bAnimating)
+    {
+        wxMemoryDC mdc;
+        mdc.SelectObject(m_backbuffer);
+        RenderScene(mdc);
+        mdc.SelectObject(wxNullBitmap);
+    }
+
+    // Blit the backbuffer to the window.  This is the ONLY path by
+    // which pixels reach the screen, which makes drawing correctness
+    // independent of paint-event ordering on wxGTK3.
+    {
+        wxMemoryDC mdc;
+        mdc.SelectObject(m_backbuffer);
+        wxSize sz = GetClientSize();
+        dc.Blit(0, 0, sz.GetWidth(), sz.GetHeight(), &mdc, 0, 0);
+        mdc.SelectObject(wxNullBitmap);
     }
 }
 
