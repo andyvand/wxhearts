@@ -512,6 +512,23 @@ void CMainWindow::OnPaint(wxPaintEvent &event)
 {
     wxPaintDC dc(this);
 
+    // During card animation, do NOT paint anything -- not even the
+    // background.  GlideStep draws each frame directly through a
+    // wxClientDC and then calls Refresh(false) + Update() to flush it
+    // to the screen.  With wxBG_STYLE_PAINT we own the background, so
+    // if OnPaint painted the green table here it would immediately
+    // overwrite the animation frame the client DC just drew, and the
+    // early-return below would leave the window a solid green with no
+    // cards on it.  That is exactly the "click a card to play and the
+    // screen stays green" symptom seen on Linux Mint / wxGTK3.
+    //
+    // Returning without touching the DC (other than creating the
+    // PaintDC to consume the event) leaves the pixels the client DC
+    // rendered intact, which is what the MFC/Win32 version relied on
+    // via Refresh(false) suppressing the erase-background.
+    if (bAnimating)
+        return;
+
     // With wxBG_STYLE_PAINT the system no longer erases the background
     // for us, so OnPaint must paint the green table itself.  Doing it
     // here (rather than in OnEraseBkgnd) keeps background + cards in a
@@ -523,12 +540,6 @@ void CMainWindow::OnPaint(wxPaintEvent &event)
         dc.SetPen(*wxTRANSPARENT_PEN);
         dc.DrawRectangle(0, 0, sz.GetWidth(), sz.GetHeight());
     }
-
-    // During card animation, suppress repainting so wxClientDC drawing
-    // is not overwritten.  The PaintDC must still be created above to
-    // consume the event.
-    if (bAnimating)
-        return;
 
     // players must be painted in order starting with playerled so that
     // cards in centre overlap correctly
