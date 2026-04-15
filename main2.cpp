@@ -63,9 +63,9 @@ void CMainWindow::Shuffle()
     if (passdir != NOPASS)
     {
         wxString text = GetStringResource(IDS_PASSLEFT + passdir);
-        m_pButton->SetLabel(text);
-        m_pButton->Enable(false);
-        m_pButton->Show();
+        PassBtnSetLabel(text);
+        PassBtnEnable(false);
+        PassBtnShow();
     }
 
     // set card locs and ask players to select cards to pass
@@ -81,12 +81,22 @@ void CMainWindow::Shuffle()
     //  Paint main window.  This is done manually instead of just
     //  invalidating the rectangle so that the cards are drawn in
     //  order as if they are dealt, instead of a player at a time.
+    //
+    //  Draw directly into the logical backbuffer (not a wxClientDC on
+    //  the window).  The window is scaled; wxClientDC writes at
+    //  unscaled logical coords and ends up in the wrong place when
+    //  the user has already resized -- and more importantly, those
+    //  pixels are outside the backbuffer, so the very next resize (or
+    //  any OnPaint) blits an empty green backbuffer over the top and
+    //  the cards disappear.  This was the "window goes dark on resize
+    //  during pass-selection" bug: Shuffle painted cards onto the
+    //  window via wxClientDC, but the backbuffer never saw them.
 
-    wxClientDC dc(this);
-    wxSize clientSize = GetClientSize();
+    wxMemoryDC dc;
+    dc.SelectObject(m_backbuffer);
     dc.SetBrush(m_BgndBrush);
     dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.DrawRectangle(0, 0, clientSize.GetWidth(), clientSize.GetHeight());
+    dc.DrawRectangle(0, 0, WINWIDTH, WINHEIGHT);
 
     for (SLOT s = 0; s < MAXSLOT; s++)
         for (int i = 0; i < MAXPLAYER; i++)
@@ -111,11 +121,13 @@ void CMainWindow::Shuffle()
         }
     }
 
+    dc.SelectObject(wxNullBitmap);
+
     DoSort();
 
-    // Ensure the full window is repainted via OnPaint().  The wxClientDC
-    // drawing above works on macOS/Windows but is unreliable on Linux/GTK3.
-    Refresh();
+    // Invalidate the whole window so OnPaint blits the freshly-drawn
+    // backbuffer to the (possibly scaled) client area.
+    Refresh(false);
     Update();
 }
 
@@ -170,14 +182,8 @@ bool CMainWindow::HandlePassing()
         p[pos]->NotifyNewRound();           // notify players cards are passed
 
     wxString s = GetStringResource(IDS_OK);
-    m_pButton->SetLabel(s);
-
-    // OnShowButton equivalent
-    if (m_pButton)
-    {
-        m_pButton->Enable(true);
-        m_pButton->SetFocus();
-    }
+    PassBtnSetLabel(s);
+    PassBtnEnable(true);
 
     for (int pos = 0; pos < MAXPLAYER; pos++)
     {
@@ -188,7 +194,7 @@ bool CMainWindow::HandlePassing()
         else
             p[pos]->GetMarkingRect(rect);
 
-        RefreshRect(rect, true);
+        RefreshLogicalRect(rect, true);
     }
 
     Update();

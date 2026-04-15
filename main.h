@@ -79,6 +79,25 @@ public:
 
     void StartBadMoveTimer(const wxRect &rect);
 
+    // Scaling support: the game renders into a fixed 540x600 logical
+    // backbuffer, which is then StretchBlit-ed to fill the actual
+    // client area (uniform scale + green letterbox bars).  All game
+    // code, card positions, m_TableRect, mouse clicks, and partial
+    // refresh rects are in LOGICAL coordinates; these helpers convert
+    // to/from window (pixel) coordinates for blitting and event
+    // dispatch.
+    struct ScaleInfo {
+        double sx;
+        double sy;
+        int    offsetX;
+        int    offsetY;
+        int    renderW;
+        int    renderH;
+    };
+    ScaleInfo GetScaleInfo() const;
+    wxPoint   WindowToLogical(const wxPoint &p) const;
+    void      RefreshLogicalRect(const wxRect &logical, bool eraseBg);
+
     void OnAbout(wxCommandEvent &event);
     void OnChar(wxKeyEvent &event);
     void OnCheat(wxCommandEvent &event);
@@ -88,6 +107,7 @@ public:
     void OnNewGame(wxCommandEvent &event);
     void OnOptions(wxCommandEvent &event);
     void OnPaint(wxPaintEvent &event);
+    void OnSize(wxSizeEvent &event);
     void OnPass(wxCommandEvent &event);
     void OnQuote(wxCommandEvent &event);
     void OnRef(wxCommandEvent &event);
@@ -124,8 +144,35 @@ public:
     // force a full re-render.
     void     RenderScene(wxDC &dc);
 
+    // Custom-drawn pass button.  A native wxButton as a child of the
+    // frame caused a bug on macOS where live-resizing the window during
+    // the pass-selection phase left the frame painted black -- the
+    // native button's paint interfered with our OnPaint.  Drawing the
+    // button into the backbuffer ourselves keeps painting entirely
+    // under our control; we hit-test clicks in OnLeftDown and fire
+    // a wxEVT_BUTTON(IDM_BUTTON) event manually so the existing
+    // OnPass handler keeps working.
+    bool      m_bPassBtnVisible;
+    bool      m_bPassBtnEnabled;
+    bool      m_bPassBtnPressed;
+    wxString  m_passBtnLabel;
+
+    void DrawPassButton(wxDC &dc) const;
+    bool PassButtonHitTest(const wxPoint &logical) const;
+
+public:
+    // Thin compatibility wrappers so call-sites that used to say
+    // m_pButton->Show() / Hide() / Enable() / SetLabel() keep working
+    // but route through our state + Refresh.
+    void PassBtnShow();
+    void PassBtnHide();
+    void PassBtnEnable(bool b);
+    void PassBtnSetLabel(const wxString &s);
+    bool PassBtnIsShown() const { return m_bPassBtnVisible; }
+
 protected:
-    wxButton *m_pButton;
+    wxPoint   m_btnLogicalPos;   // pass-button position in logical coords
+    wxSize    m_btnLogicalSize;  // pass-button size     in logical coords
     int      m_StatusHeight;
     CScoreDlg *m_pScoreDlg;
     wxTimer  m_badMoveTimer;

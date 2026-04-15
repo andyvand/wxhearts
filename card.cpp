@@ -217,7 +217,7 @@ void card::GlideStep(int x1, int y1, int x2, int y2)
     int xMax = ((x1 > x2) ? x1 : x2) + dxCrd;
     int yMax = ((y1 > y2) ? y1 : y2) + dyCrd;
     wxRect rect(xMin, yMin, xMax - xMin, yMax - yMin);
-    pMainWnd->RefreshRect(rect, false);
+    pMainWnd->RefreshLogicalRect(rect, false);
     pMainWnd->Update();
 
     /* Swap backgrounds */

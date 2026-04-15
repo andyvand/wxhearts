@@ -237,44 +237,35 @@ void local_human::PopCard(wxBrush &brush, int x, int y)
 
     bool bSelected = cd[s].IsSelected();
     cd[s].Select(!bSelected);
+    (void)brush;
 
-    wxClientDC dc(pMainWnd);
-    wxMemoryDC memDC;
-    memDC.SelectObject(m_bmStretchCard);
-    memDC.SetBrush(brush);
-    memDC.SetPen(*wxTRANSPARENT_PEN);
-    memDC.DrawRectangle(0, 0, card::dxCrd, card::dyCrd + POPSPACING);
-
-    for (int i = 0; i < MAXSLOT; i++)
-    {
-        if (abs(i - s) <= (card::dxCrd / HORZSPACING))
-        {
-            cd[i].Draw(memDC,                                   // dc
-                       (i - s) * HORZSPACING,                   // x
-                       cd[i].IsSelected() ? 0 : POPSPACING,     // y
-                       FACEUP,                                  // mode
-                       false);                                  // update loc?
-        }
-    }
-    dc.Blit(loc.x + (HORZSPACING * s), loc.y - POPSPACING,
-           card::dxCrd, card::dyCrd + POPSPACING,
-           &memDC, 0, 0);
-    memDC.SelectObject(wxNullBitmap);
-
-    // On Linux/GTK3, wxClientDC drawing is unreliable.  Force a
-    // repaint through OnPaint so PopDraw renders the offset correctly.
-    //
-    // Important: only invalidate the local human's hand area, and
-    // do *not* request an erase-background.  A full Refresh() with
-    // eraseBackground=true causes wxGTK3 to paint the entire window
-    // green via OnEraseBkgnd, and because OnPaint is then deferred
-    // (we are still inside the EVT_LEFT_DOWN handler), the user is
-    // left staring at an all-green window with no cards on it.
-    // Refreshing just the cover rect, with eraseBackground=false,
-    // lets OnPaint redraw atomically over the existing pixels.
+    // Update the backbuffer for just the affected hand cover rect so
+    // the pop-up/pop-down visual happens immediately, and the new state
+    // persists through subsequent resizes (OnPaint's RenderScene will
+    // keep rendering it the same way).  Writing to a wxClientDC at
+    // logical coords would miss when the window has been scaled, and
+    // those pixels wouldn't survive the next OnPaint since the
+    // backbuffer wouldn't reflect them.
     wxRect refreshRect;
     GetCoverRect(refreshRect);
-    pMainWnd->RefreshRect(refreshRect, false);
+
+    if (pMainWnd->m_backbuffer.IsOk())
+    {
+        wxMemoryDC bbdc;
+        bbdc.SelectObject(pMainWnd->m_backbuffer);
+        bbdc.SetBrush(CMainWindow::m_BgndBrush);
+        bbdc.SetPen(*wxTRANSPARENT_PEN);
+        bbdc.DrawRectangle(refreshRect);
+        Draw(bbdc, false, ALL);
+        MarkSelectedCards(bbdc);
+        bbdc.SelectObject(wxNullBitmap);
+    }
+
+    // Invalidate just the cover rect (not the whole window) so OnPaint
+    // blits only that slice of the backbuffer to the scaled target.
+    // eraseBackground=false to avoid wxGTK3 painting the area green
+    // before OnPaint has a chance to fire.
+    pMainWnd->RefreshLogicalRect(refreshRect, false);
     pMainWnd->Update();
 }
 
