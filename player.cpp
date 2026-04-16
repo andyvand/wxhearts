@@ -254,43 +254,78 @@ void player::Draw(wxDC &dc, bool bCheating, SLOT slot)
         cd[playedslot].Draw(dc);
 }
 
-void player::DisplayName(wxDC &dc)
+void player::DisplayName(wxDC &dc, const wxRect *cardBounds)
 {
     wxFont oldFont = dc.GetFont();
     dc.SetFont(font);
     dc.SetTextBackground(pMainWnd->GetBkColor());
     dc.SetBackgroundMode(wxTRANSPARENT);
-    dc.DrawText(name, nameloc.x, nameloc.y);
+
+    wxCoord w, h;
+    dc.GetTextExtent(name, &w, &h);
+
+    wxRect bounds;
+    bool haveBounds = false;
+
+    if (cardBounds) {
+        bounds = *cardBounds;
+        haveBounds = true;
+    } else {
+        // Compute bounding box from cards currently in hand
+        int minX = 99999, maxX = -99999;
+        int minY = 99999, maxY = -99999;
+
+        for (SLOT s = 0; s < MAXSLOT; s++) {
+            if (cd[s].IsInHand()) {
+                int cx = cd[s].GetX();
+                int cy = cd[s].GetY();
+                if (cx < minX) minX = cx;
+                if (cx + card::dxCrd > maxX) maxX = cx + card::dxCrd;
+                if (cy < minY) minY = cy;
+                if (cy + card::dyCrd > maxY) maxY = cy + card::dyCrd;
+                haveBounds = true;
+            }
+        }
+
+        if (haveBounds)
+            bounds = wxRect(minX, minY, maxX - minX, maxY - minY);
+    }
+
+    wxPoint namepos = nameloc; // fallback when no cards visible
+
+    if (haveBounds) {
+        int left   = bounds.GetX();
+        int top    = bounds.GetY();
+        int right  = bounds.GetX() + bounds.GetWidth();
+        int bottom = bounds.GetY() + bounds.GetHeight();
+
+        switch (position) {
+            case 0: // bottom - name to the left of cards, bottom-aligned
+                namepos.x = left - IDGE - w;
+                namepos.y = bottom - h;
+                break;
+            case 1: // left - name above cards, left-aligned
+                namepos.x = left;
+                namepos.y = top - h;
+                break;
+            case 2: // top - name to the right of cards, top-aligned
+                namepos.x = right + IDGE;
+                namepos.y = top;
+                break;
+            case 3: // right - name below cards, right-aligned
+                namepos.x = right - w;
+                namepos.y = bottom + IDGE;
+                break;
+        }
+    }
+
+    dc.DrawText(name, namepos.x, namepos.y);
     dc.SetFont(oldFont);
 }
 
 void player::SetName(wxString &newname, wxDC &dc)
 {
-    static wxRect rect;
-    static bool bFirst = true;
-
-    if (bFirst) {
-        rect = wxRect(pMainWnd->GetClientSize());
-    }
-    if (rect.GetRight() > 100) bFirst = false;
-
     name = newname;
-    wxFont oldFont = dc.GetFont();
-    dc.SetFont(font);
-    if (position == 0)
-    {
-        wxCoord w, h;
-        dc.GetTextExtent(name, &w, &h);
-        nameloc.x = ((rect.GetRight() - (12 * HORZSPACING + card::dxCrd)) / 2)
-                        - IDGE - w;
-    }
-    else if (position == 3)
-    {
-        wxCoord w, h;
-        dc.GetTextExtent(name, &w, &h);
-        nameloc.x = rect.GetRight() - w - (3*IDGE) - 2;
-    }
-    dc.SetFont(oldFont);
 }
 
 
@@ -435,6 +470,8 @@ void player::DisplayHeartsWon(wxDC &dc)
     x += ((MAXCARDSWON - numcardswon) / 2) * dx;
     y += ((MAXCARDSWON - numcardswon) / 2) * dy;
 
+    int startX = x, startY = y;
+
     for (int i = 0; i < numcardswon; i++)
     {
         c.SetID(cardswon[i]);
@@ -444,5 +481,16 @@ void player::DisplayHeartsWon(wxDC &dc)
         y += dy;
     }
 
-    DisplayName(dc);
+    if (numcardswon > 0) {
+        int endX = x - dx;
+        int endY = y - dy;
+        int minX = (startX < endX) ? startX : endX;
+        int maxX = ((startX > endX) ? startX : endX) + card::dxCrd;
+        int minY = (startY < endY) ? startY : endY;
+        int maxY = ((startY > endY) ? startY : endY) + card::dyCrd;
+        wxRect bounds(minX, minY, maxX - minX, maxY - minY);
+        DisplayName(dc, &bounds);
+    } else {
+        DisplayName(dc);
+    }
 }

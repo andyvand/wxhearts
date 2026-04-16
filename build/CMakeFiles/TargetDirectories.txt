@@ -1,0 +1,4 @@
+/Users/andyvand/Downloads/wxhearts/build/CMakeFiles/bin2c.dir
+/Users/andyvand/Downloads/wxhearts/build/CMakeFiles/wxhearts.dir
+/Users/andyvand/Downloads/wxhearts/build/CMakeFiles/edit_cache.dir
+/Users/andyvand/Downloads/wxhearts/build/CMakeFiles/rebuild_cache.dir

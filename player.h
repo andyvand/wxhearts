@@ -96,7 +96,7 @@ class player {
 
         card    *Card(int s) { return &(cd[s]); }
         void    DisplayHeartsWon(wxDC &dc);
-        void    DisplayName(wxDC &dc);
+        void    DisplayName(wxDC &dc, const wxRect *cardBounds = nullptr);
         int     EvaluateScore(bool &bMoonShot);
         bool    GetCardLoc(SLOT s, wxPoint &loc);
         SLOT    GetSlot(int id);
