@@ -1,3 +1,0 @@
-# Hashes of file build rules.
-0ae00db5fd276b82e0930b5c355cde3a hearts.xrs
-dd44f641d48843c0a826da62cf1b2e26 xrc_data.h
