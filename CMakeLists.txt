@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
-project(wxhearts LANGUAGES C CXX)
+if(APPLE)
+    project(wxhearts LANGUAGES C CXX OBJCXX)
+else()
+    project(wxhearts LANGUAGES C CXX)
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -79,6 +83,10 @@ add_custom_command(
 set(ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.icns)
 set_source_files_properties(${ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
+if(APPLE)
+    list(APPEND SOURCES help_mac.mm)
+endif()
+
 if(WIN32)
     set(WIN_RC ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.rc)
 endif()
@@ -88,13 +96,30 @@ set_target_properties(wxhearts PROPERTIES
     MACOSX_BUNDLE_ICON_FILE wxhearts.icns
     MACOSX_BUNDLE_BUNDLE_NAME "Hearts"
     MACOSX_BUNDLE_GUI_IDENTIFIER "com.mshearts.wxhearts"
+    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in"
 )
+
+if(APPLE)
+    target_link_libraries(wxhearts "-framework AppKit" "-framework Foundation")
+endif()
 target_link_libraries(wxhearts ${wxWidgets_LIBRARIES})
 target_include_directories(wxhearts PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 if(APPLE)
     # macOS: copy resources into bundle Resources directory
     set(BUNDLE_RESOURCES_DIR $<TARGET_FILE_DIR:wxhearts>/../Resources)
+
+    # Copy the wxhearts.help book into Contents/Resources/ so the
+    # Help menu (CFBundleHelpBookFolder / CFBundleHelpBookName in
+    # Info.plist) resolves it via NSHelpManager.
+    add_custom_command(TARGET wxhearts POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+                "${BUNDLE_RESOURCES_DIR}/wxhearts.help"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                "${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.help"
+                "${BUNDLE_RESOURCES_DIR}/wxhearts.help"
+        COMMENT "Installing Hearts Help book into app bundle"
+        VERBATIM)
 
 elseif(UNIX)
     # Linux: define install data path and install targets
@@ -106,6 +131,14 @@ elseif(UNIX)
     install(TARGETS wxhearts RUNTIME DESTINATION bin)
     install(FILES     ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.desktop      DESTINATION share/applications)
     install(FILES     ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.metainfo.xml DESTINATION share/metainfo)
+    install(FILES     ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.6            DESTINATION share/man/man6)
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/icons/sizes/                    DESTINATION share/icons/hicolor)
+    install(FILES     ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.help/Contents/Resources/en.lproj/index.html
+                      ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.help/Contents/Resources/en.lproj/shared.css
+                      ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.help/Contents/Resources/en.lproj/hearts_object.html
+                      ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.help/Contents/Resources/en.lproj/hearts_novice.html
+                      ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.help/Contents/Resources/en.lproj/hearts_score.html
+                      ${CMAKE_CURRENT_SOURCE_DIR}/wxhearts.help/Contents/Resources/en.lproj/hearts_strategy.html
+                      DESTINATION share/wxhearts/help)
 
 endif()

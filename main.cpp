@@ -20,11 +20,18 @@ Other CMainWindow member functions are in main2.cpp, welcome.cpp
 #include "resource.h"
 #include <wx/aboutdlg.h>
 #include <wx/iconbndl.h>
+#include <wx/stdpaths.h>
+#include <wx/filename.h>
+#include <wx/utils.h>
 #include <wx/xrc/xmlres.h>
 #include "debug.h"
 
 #include <cstdlib>
 #include <ctime>
+
+#ifdef __APPLE__
+extern "C" void ShowMacHelpBook(const char *anchor);
+#endif
 
 
 // declare static members
@@ -70,6 +77,7 @@ wxBEGIN_EVENT_TABLE(CMainWindow, wxFrame)
     EVT_MENU(IDM_SCORE,       CMainWindow::OnScore)
     EVT_MENU(IDM_CHEAT,       CMainWindow::OnCheat)
     EVT_MENU(IDM_QUOTE,       CMainWindow::OnQuote)
+    EVT_MENU(IDM_HELP,        CMainWindow::OnHelpTopics)
     EVT_MENU(IDM_REF,         CMainWindow::OnRef)
     EVT_MENU(IDM_WELCOME,     CMainWindow::OnWelcome)
     EVT_MENU(IDM_EXIT,        CMainWindow::OnExit)
@@ -172,6 +180,8 @@ CMainWindow::CMainWindow()
     menuBar->Append(gameMenu, wxT("&Game"));
 
     wxMenu *helpMenu = new wxMenu;
+    helpMenu->Append(IDM_HELP, wxT("Hearts &Help\tF1"));
+    helpMenu->AppendSeparator();
     helpMenu->Append(IDM_QUOTE, wxT("&Quote..."));
     helpMenu->AppendSeparator();
     helpMenu->Append(IDM_ABOUT, wxT("&About Hearts"));
@@ -203,14 +213,15 @@ CMainWindow::CMainWindow()
 
     // Accelerator table
 
-    wxAcceleratorEntry accel[6];
-    accel[0].Set(wxACCEL_NORMAL, WXK_F2,     IDM_NEWGAME);
-    accel[1].Set(wxACCEL_NORMAL, WXK_F7,     IDM_OPTIONS);
-    accel[2].Set(wxACCEL_NORMAL, WXK_F8,     IDM_SOUND);
-    accel[3].Set(wxACCEL_NORMAL, WXK_F9,     IDM_SCORE);
-    accel[4].Set(wxACCEL_NORMAL, WXK_F10,    IDM_CHEAT);
-    accel[5].Set(wxACCEL_NORMAL, WXK_ESCAPE, IDM_BOSSKEY);
-    SetAcceleratorTable(wxAcceleratorTable(6, accel));
+    wxAcceleratorEntry accel[7];
+    accel[0].Set(wxACCEL_NORMAL, WXK_F1,     IDM_HELP);
+    accel[1].Set(wxACCEL_NORMAL, WXK_F2,     IDM_NEWGAME);
+    accel[2].Set(wxACCEL_NORMAL, WXK_F7,     IDM_OPTIONS);
+    accel[3].Set(wxACCEL_NORMAL, WXK_F8,     IDM_SOUND);
+    accel[4].Set(wxACCEL_NORMAL, WXK_F9,     IDM_SCORE);
+    accel[5].Set(wxACCEL_NORMAL, WXK_F10,    IDM_CHEAT);
+    accel[6].Set(wxACCEL_NORMAL, WXK_ESCAPE, IDM_BOSSKEY);
+    SetAcceleratorTable(wxAcceleratorTable(7, accel));
 
     // Set up table rect.  Query the real status bar height instead of
     // hard-coding 20px; GTK status bars are typically taller, and using
@@ -329,6 +340,59 @@ void CMainWindow::OnQuote(wxCommandEvent &event)
     HeartsPlaySound(SND_QUOTE);
     quote.ShowModal();
     HeartsPlaySound(OFF);
+}
+
+
+/****************************************************************************
+
+CMainWindow::OnHelpTopics
+
+Opens the Hearts Help book.  On macOS this routes through NSHelpManager
+so the bundled wxhearts.help book opens in Help Viewer (the book is
+registered via CFBundleHelpBookFolder/CFBundleHelpBookName in Info.plist).
+On Windows it opens the bundled CHM; on Linux it launches the default
+browser on the installed HTML help.
+
+****************************************************************************/
+
+void CMainWindow::OnHelpTopics(wxCommandEvent &event)
+{
+#ifdef __APPLE__
+    ShowMacHelpBook(nullptr);
+#else
+    const wxString resDir = wxStandardPaths::Get().GetResourcesDir();
+
+#  ifdef __WXMSW__
+    wxFileName chm(resDir, wxT("wxhearts.chm"));
+    if (chm.FileExists())
+    {
+        wxLaunchDefaultApplication(chm.GetFullPath());
+        return;
+    }
+#  endif
+
+    // Fallback for Windows (no CHM present) and for Linux: open the
+    // bundled HTML index in the default browser.
+    wxFileName html(resDir, wxT("index.html"));
+    html.AppendDir(wxT("wxhearts.help"));
+    html.AppendDir(wxT("Contents"));
+    html.AppendDir(wxT("Resources"));
+    html.AppendDir(wxT("en.lproj"));
+
+    if (!html.FileExists())
+    {
+#  ifdef WXHEARTS_DATADIR
+        html = wxFileName(wxT(WXHEARTS_DATADIR), wxT("index.html"));
+        html.AppendDir(wxT("help"));
+#  endif
+    }
+
+    if (html.FileExists())
+        wxLaunchDefaultBrowser(wxT("file://") + html.GetFullPath());
+    else
+        wxMessageBox(wxT("Hearts Help is not installed."),
+                     wxT("Hearts Help"), wxOK | wxICON_INFORMATION, this);
+#endif
 }
 
 

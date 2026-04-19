@@ -1,0 +1,75 @@
+.\" Manpage for wxhearts
+.TH WXHEARTS 6 "2026-04-19" "wxhearts 1.0" "Games Manual"
+.SH NAME
+wxhearts \- the classic Hearts card game
+.SH SYNOPSIS
+.B wxhearts
+.SH DESCRIPTION
+.B wxhearts
+is a graphical implementation of the classic trick-taking card game Hearts
+for four players. You play against three computer opponents. The game is
+played with a standard 52-card deck; cards are ranked from 2 (lowest) to
+Ace (highest) in each of the four suits.
+.SH OBJECT
+The object of Hearts is to have the lowest score at the end of the game.
+.SH PLAY
+.IP 1. 4
+Choose three cards to pass to an opponent (except for every fourth hand,
+when no cards are passed). To select a card to pass, click it. To cancel
+the selection of a card, click it again.
+.IP 2. 4
+The player who has the two of clubs starts the play by leading with it.
+.IP 3. 4
+Each player, moving clockwise, clicks a card to play. You must play a card
+in the same suit. If you do not have one, you can play any card, except
+that you cannot play a heart or the queen of spades on the first trick.
+.PP
+The person who plays the highest card of the same suit as the first card
+played takes the trick. That player starts the next trick by clicking a
+card to lead. You cannot lead with a heart until a heart has been played
+on a previous trick.
+.SH SCORING
+.IP \(bu 4
+At the end of each hand, you get one point for each heart in your hand
+and 13 points for the queen of spades. The game continues until one
+player gets 100 points or more, or until the dealer quits the game.
+.IP \(bu 4
+If you win all the hearts and the queen of spades in one hand (called
+.BR "Shooting the Moon" ),
+then you score zero points and each other player scores 26 points.
+.SH STRATEGY
+.IP \(bu 4
+Avoid taking a trick containing hearts or the queen of spades. The only
+time you will want to take such tricks is when you are trying to Shoot
+the Moon or trying to prevent someone else from successfully Shooting
+the Moon.
+.IP
+To
+.I "Shoot the Moon"
+is to collect all the hearts and the queen of spades. When that happens,
+you score zero points and each other player scores 26 points. Your
+chances of successfully Shooting the Moon are best if your hand contains
+a large number of high-value hearts and spades.
+.IP \(bu 4
+On hands that begin by passing cards to an opponent, pass cards with
+high values, such as aces or face cards.
+.IP \(bu 4
+Play your highest cards early in the game, while your opponents are
+likely to have some cards in each suit and will have to play those
+cards instead of hearts. Tricks that do not contain any hearts or the
+queen of spades do not add to your score.
+.IP \(bu 4
+Keep track of which cards have been played, particularly whether the
+queen of spades has been played and whether hearts have been broken
+(that is, whether a heart has been discarded on an earlier trick).
+.SH FILES
+.TP
+.I /usr/share/wxhearts/
+Game data files and HTML help book (may also be under
+.IR /usr/local/share/wxhearts/
+depending on install prefix).
+.SH AUTHORS
+Andy Vandijck
+.SH SEE ALSO
+The HTML help book installed under
+.IR share/wxhearts/help/ .

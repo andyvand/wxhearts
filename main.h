@@ -110,6 +110,7 @@ public:
     void OnSize(wxSizeEvent &event);
     void OnPass(wxCommandEvent &event);
     void OnQuote(wxCommandEvent &event);
+    void OnHelpTopics(wxCommandEvent &event);
     void OnRef(wxCommandEvent &event);
     void OnRef();  // direct call version
     void OnScore(wxCommandEvent &event);
