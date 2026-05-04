@@ -19,7 +19,25 @@
       "Bash(open:*)",
       "Bash(unzip -l /tmp/hearts.xrs)",
       "Bash(unzip -p /tmp/hearts.xrs 'hearts.xrs$hearts.xrc')",
-      "Bash(build/bin2c /tmp/hearts.xrs /tmp/test_xrc_data.h xrc_data)"
+      "Bash(build/bin2c /tmp/hearts.xrs /tmp/test_xrc_data.h xrc_data)",
+      "Bash(sips --getProperty all /Users/andyvand/Downloads/wxhearts/wxhearts.icns)",
+      "Bash(wx-config --version)",
+      "Bash(make -j4)",
+      "Bash(make -C /Users/andyvand/Downloads/wxhearts/build -j4)",
+      "Read(//Users/andyvand/Downloads/**)",
+      "Bash(rm -rf _build_test)",
+      "Bash(ninja)",
+      "Bash(hiutil -V)",
+      "Bash(hiutil -Cagvf wxhearts.helpindex -s en -m 1.0 .)",
+      "Bash(xcodebuild -version)",
+      "Bash(xcrun --sdk macosx --show-sdk-version)",
+      "Read(//private/tmp/**)",
+      "Bash(c++ -x objective-c++ -E test_uuid3.mm)",
+      "Bash(wx-config --cxxflags)",
+      "Read(//usr/local/include/uuid/**)",
+      "Bash(/usr/libexec/PlistBuddy -c \"Print :CFBundleHelpBookFolder\" -c \"Print :CFBundleHelpBookName\" -c \"Print :CFBundleIdentifier\" /Users/andyvand/Downloads/wxhearts/build_test/wxhearts.app/Contents/Info.plist)",
+      "Bash(/usr/libexec/PlistBuddy -c \"Print :CFBundleIdentifier\" /Users/andyvand/Downloads/wxhearts/build_test/wxhearts.app/Contents/Resources/wxhearts.help/Contents/Info.plist)",
+      "Bash(groff -man -Tutf8 /Users/andyvand/Downloads/wxhearts/wxhearts.6)"
     ]
   }
 }
