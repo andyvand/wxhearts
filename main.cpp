@@ -201,6 +201,18 @@ CMainWindow::CMainWindow()
     // the bottom row of cards rendered partially off-screen.  Using
     // SetClientSize here makes the playable area identical across
     // platforms regardless of decoration heights.
+#ifdef __ANDROID__
+    // Android has no desktop window manager and forces a single full-screen
+    // top-level window.  Pinning a fixed 540x600 client area (and a minimum
+    // size larger than some phone screens) would clip the Qt-backed menu bar
+    // and push the bottom row of cards off-screen.  Instead, fill the screen
+    // and let the existing backbuffer StretchBlit in OnPaint scale the
+    // fixed-logical-size board into whatever client area we're given; OnSize
+    // reflows m_TableRect and the backbuffer when the real size arrives.
+    // This keeps the Game/Help wxMenuBar (a per-window QMenuBar under wxQt,
+    // not a global menu bar) visible and tappable at the top of the window.
+    Maximize(true);
+#else
     SetClientSize(WINWIDTH, WINHEIGHT);
 
     // Pin the minimum client area to the original playable size so
@@ -210,6 +222,7 @@ CMainWindow::CMainWindow()
     // anchored at the top-left at its fixed logical size; extra
     // client area is simply filled with the green table background.
     SetMinClientSize(wxSize(WINWIDTH, WINHEIGHT));
+#endif
 
     // Accelerator table
 
@@ -223,28 +236,40 @@ CMainWindow::CMainWindow()
     accel[6].Set(wxACCEL_NORMAL, WXK_ESCAPE, IDM_BOSSKEY);
     SetAcceleratorTable(wxAcceleratorTable(7, accel));
 
-    // Set up table rect.  Query the real status bar height instead of
-    // hard-coding 20px; GTK status bars are typically taller, and using
-    // a too-small value left m_TableRect extending under the status bar,
-    // pushing the pass button and bottom row of cards out of view.
-    wxSize clientSize = GetClientSize();
+    // Set up table rect and backbuffer in the game's FIXED logical
+    // coordinate space (WINWIDTH x WINHEIGHT).  Everything -- card
+    // positions, m_TableRect, the pass button -- is laid out in this
+    // logical space; OnPaint StretchBlits the logical backbuffer into the
+    // real client area and WindowToLogical() maps clicks back, so the
+    // backbuffer and table MUST be the logical size, not the runtime
+    // client size.  On desktop GetClientSize() happened to equal
+    // WINWIDTH x WINHEIGHT (SetClientSize pins it), which hid the coupling;
+    // on Android the window is maximized to the screen, so using the client
+    // size here sized the backbuffer/table to the whole screen while the
+    // scaling math still assumed 540x600 -- cards drew in the wrong place
+    // and clicks (transformed to logical coords) missed them entirely.
+    //
+    // The status-bar height is still queried and subtracted so the bottom
+    // row of cards and the pass button clear the status bar, matching the
+    // desktop layout.
     wxStatusBar *sbar = GetStatusBar();
     m_StatusHeight = (sbar ? sbar->GetSize().GetHeight() : 20);
-    m_TableRect = wxRect(0, 0, clientSize.GetWidth(),
-                         clientSize.GetHeight() - m_StatusHeight);
+    if (m_StatusHeight < 0 || m_StatusHeight > WINHEIGHT / 4)
+        m_StatusHeight = 20;        // guard against an unlaid-out status bar
+    m_TableRect = wxRect(0, 0, WINWIDTH, WINHEIGHT - m_StatusHeight);
 
     // Allocate the persistent backbuffer and pre-fill it with the
     // green table colour.  OnPaint will refill it with the full scene
     // on first paint; we pre-fill here so the window isn't white for
     // the instant between show and first paint.
-    m_backbuffer = wxBitmap(clientSize.GetWidth(), clientSize.GetHeight());
+    m_backbuffer = wxBitmap(WINWIDTH, WINHEIGHT);
     if (m_backbuffer.IsOk())
     {
         wxMemoryDC mdc;
         mdc.SelectObject(m_backbuffer);
         mdc.SetBrush(m_BgndBrush);
         mdc.SetPen(*wxTRANSPARENT_PEN);
-        mdc.DrawRectangle(0, 0, clientSize.GetWidth(), clientSize.GetHeight());
+        mdc.DrawRectangle(0, 0, WINWIDTH, WINHEIGHT);
         mdc.SelectObject(wxNullBitmap);
     }
 
@@ -531,7 +556,16 @@ void CMainWindow::OnLeftDown(wxMouseEvent &event)
     // 540x600 coordinate system.  Without this, clicks on scaled cards
     // would miss -- the player/card hit-testing code expects coords in
     // the same space the cards were laid out in (m_TableRect).
-    wxPoint L = WindowToLogical(wxPoint(event.GetX(), event.GetY()));
+    //
+    // On the wxQt/Android build the board is rendered from the window's
+    // top-left (our wxPaintDC(this)), with the menu bar reserved at the
+    // top by GetScaleInfo(), but wxQt delivers mouse events already in
+    // client coordinates -- i.e. measured from *below* the menu bar.  Add
+    // the menu-bar height back so the click lands in the same window space
+    // the cards were blitted into; otherwise every click registers a menu
+    // bar's height too high and misses the card that was tapped.
+    wxPoint winPt(event.GetX(), event.GetY() + MenuBarOffsetY());
+    wxPoint L = WindowToLogical(winPt);
 
     // Custom-drawn pass button: hit-test first so a click on the button
     // fires the same wxEVT_BUTTON(IDM_BUTTON) event the native wxButton
@@ -676,6 +710,22 @@ void CMainWindow::RenderScene(wxDC &dc)
 }
 
 
+int CMainWindow::MenuBarOffsetY() const
+{
+#ifdef __ANDROID__
+    // On the wxQt/Android build the frame is a QMainWindow whose menu bar
+    // occupies the top strip of the window; wx reports that strip via
+    // GetClientAreaOrigin().  Reserve it so the board is drawn beneath the
+    // menu bar and clicks (see OnLeftDown) are mapped into the same space.
+    int y = GetClientAreaOrigin().y;
+    if (y < 0) y = 0;
+    return y;
+#else
+    return 0;
+#endif
+}
+
+
 CMainWindow::ScaleInfo CMainWindow::GetScaleInfo() const
 {
     // Uniform scale that maps the fixed 540x600 logical backbuffer to
@@ -685,9 +735,16 @@ CMainWindow::ScaleInfo CMainWindow::GetScaleInfo() const
     // m_TableRect, card coordinates, etc. stay in the logical
     // coordinate system; we only transform at the window boundary
     // (paint / mouse / RefreshRect).
+    //
+    // The menu-bar strip (Android/wxQt only; 0 on desktop) is reserved at
+    // the top: the game is centred in the area *below* it so nothing is
+    // hidden behind the Hearts menu bar and clicks line up with the cards.
     wxSize sz = GetClientSize();
     int cw = sz.GetWidth()  > 0 ? sz.GetWidth()  : WINWIDTH;
-    int ch = sz.GetHeight() > 0 ? sz.GetHeight() : WINHEIGHT;
+    int chFull = sz.GetHeight() > 0 ? sz.GetHeight() : WINHEIGHT;
+    int menuH = MenuBarOffsetY();
+    if (menuH > chFull) menuH = 0;          // sanity: never reserve more than we have
+    int ch = chFull - menuH;                // drawable height beneath the menu bar
     double sxRaw = (double)cw / (double)WINWIDTH;
     double syRaw = (double)ch / (double)WINHEIGHT;
     double s = sxRaw < syRaw ? sxRaw : syRaw;
@@ -700,7 +757,7 @@ CMainWindow::ScaleInfo CMainWindow::GetScaleInfo() const
     info.renderW = rw;
     info.renderH = rh;
     info.offsetX = (cw - rw) / 2;
-    info.offsetY = (ch - rh) / 2;
+    info.offsetY = menuH + (ch - rh) / 2;   // centred beneath the menu bar
     return info;
 }
 

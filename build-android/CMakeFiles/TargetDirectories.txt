@@ -1,0 +1,17 @@
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/apk.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/aab.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/aar.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_other_files.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_copy_apk_dependencies.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/_qt_internal_apk_dependencies.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/apk_all.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/qt_internal_plugins.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_prepare_apk_dir.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_make_apk.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_make_aar.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_make_aab.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/edit_cache.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/rebuild_cache.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_autogen_timestamp_deps.dir
+/Users/andyvand/Downloads/wxhearts/build-android/CMakeFiles/wxhearts_autogen.dir

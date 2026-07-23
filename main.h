@@ -98,6 +98,15 @@ public:
     wxPoint   WindowToLogical(const wxPoint &p) const;
     void      RefreshLogicalRect(const wxRect &logical, bool eraseBg);
 
+    // Height of the menu bar, in window pixels, that must be reserved at
+    // the top of the client area on the wxQt/Android build.  There, our
+    // custom wxPaintDC(this) paints from the window's top-left while wxQt
+    // delivers mouse events in client coordinates (already below the menu
+    // bar) -- so the game must be rendered beneath the menu bar and clicks
+    // shifted into that same space, or clicks land above the cards.  Zero
+    // on desktop, where menu-bar handling needs no compensation.
+    int       MenuBarOffsetY() const;
+
     void OnAbout(wxCommandEvent &event);
     void OnChar(wxKeyEvent &event);
     void OnCheat(wxCommandEvent &event);
