@@ -13,6 +13,9 @@ A cross-platform port of Microsoft Hearts built with [wxWidgets](https://www.wxw
 ### Linux
 ![Linux screenshot](/screenshots/wxhearts_linux.png)
 
+### Android
+![Android screenshot](/screenshots/wxhearts-android.jpg)
+
 ## Building
 
 ### Prerequisites
