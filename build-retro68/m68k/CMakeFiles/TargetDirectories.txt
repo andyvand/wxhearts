@@ -1,5 +1,0 @@
-/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/wxhearts.dir
-/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/retro68-macbinary-set-flags.dir
-/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/wxhearts-application.dir
-/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/edit_cache.dir
-/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/rebuild_cache.dir
