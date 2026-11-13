@@ -1,7 +1,10 @@
 /* sound.cpp -- wxWidgets port */
 /* SoundInit() verifies sound support.
    HeartsPlaySound() plays the sound given a resource id.
-   Sound data is extracted from the compiled XRS archive (hearts.xrs). */
+   Sound data is extracted from the compiled XRS archive (hearts.xrs).
+   Classic Mac OS (Retro68) has no wxSound: see retro68/sound_retro68.cpp. */
+
+#ifndef __WXRETRO68__
 
 #include "hearts.h"
 #include "main.h"
@@ -129,3 +132,5 @@ bool CMainWindow::HeartsPlaySound(int id)
 
     return true;
 }
+
+#endif // !__WXRETRO68__

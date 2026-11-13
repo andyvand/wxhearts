@@ -1,0 +1,427 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake:200 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The target system is: Retro68 - 1 - 
+      The host system is: Darwin - 27.2.0 - arm64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /opt/retro68/bin/m68k-apple-macos-gcc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out.gdb"
+      
+      The C compiler identification could not be found in:
+        /Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/4.0.3/CompilerIdC/a.out
+      
+      The C compiler identification is GNU, found in:
+        /Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/4.0.3/CompilerIdC/a.out.gdb
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /opt/retro68/bin/m68k-apple-macos-g++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out.gdb"
+      
+      The CXX compiler identification could not be found in:
+        /Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/4.0.3/CompilerIdCXX/a.out
+      
+      The CXX compiler identification is GNU, found in:
+        /Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/4.0.3/CompilerIdCXX/a.out.gdb
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-6HZtiT"
+      binary: "/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-6HZtiT"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/opt/retro68/m68k-apple-macos/cmake;/opt/retro68/m68k-apple-macos/cmake"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-6HZtiT'
+        
+        Run Build Command(s): /usr/local/bin/ninja -v cmTC_69a01
+        [1/2] /opt/retro68/bin/m68k-apple-macos-gcc   -v -o CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj -c /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-gcc
+        Target: m68k-apple-macos
+        Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.1.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_69a01.dir/'
+         /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/cc1 -quiet -v -Wno-trigraphs /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_69a01.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=68000 -version -o /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccPsVGBb.s
+        GNU C23 (GCC) version 16.1.0 (m68k-apple-macos)
+        	compiled by GNU C version Apple LLVM 21.0.0 (clang-2100.4.1.1), GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.4.1, isl version isl-0.28-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/sys-include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include
+        End of search list.
+        Compiler executable checksum: c1931f3b67823aea33c1bd37520d27fe
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_69a01.dir/'
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/as -mcpu=68000 -o CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccPsVGBb.s
+        COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/
+        LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.'
+        [2/2] : && /opt/retro68/bin/m68k-apple-macos-gcc  -v CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj -o cmTC_69a01   && :
+        Using built-in specs.
+        COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-gcc
+        COLLECT_LTO_WRAPPER=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper
+        Target: m68k-apple-macos
+        Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.1.0 (GCC) 
+        COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/
+        LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_69a01' '-mcpu=68000' '-dumpdir' 'cmTC_69a01.'
+         /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/collect2 -plugin /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/liblto_plugin.so -plugin-opt=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//cctkMNFr.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lretrocrt -plugin-opt=-pass-through=-lInterface -elf2mac -q -undefined=_consolewrite -o cmTC_69a01 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj --start-group -lgcc -lc -lretrocrt -lInterface --end-group
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_69a01' '-mcpu=68000' '-dumpdir' 'cmTC_69a01.'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:191 (message)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include]
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed]
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include]
+        end of search list found
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include] ==> [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include]
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed] ==> [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed]
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include] ==> [/opt/retro68/m68k-apple-macos/include]
+        implicit include dirs: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include;/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed;/opt/retro68/m68k-apple-macos/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-6HZtiT']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/ninja -v cmTC_69a01]
+        ignore line: [[1/2] /opt/retro68/bin/m68k-apple-macos-gcc   -v -o CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj -c /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-gcc]
+        ignore line: [Target: m68k-apple-macos]
+        ignore line: [Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing]
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.1.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_69a01.dir/']
+        ignore line: [ /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/cc1 -quiet -v -Wno-trigraphs /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_69a01.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=68000 -version -o /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccPsVGBb.s]
+        ignore line: [GNU C23 (GCC) version 16.1.0 (m68k-apple-macos)]
+        ignore line: [	compiled by GNU C version Apple LLVM 21.0.0 (clang-2100.4.1.1)  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.4.1  isl version isl-0.28-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/sys-include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: c1931f3b67823aea33c1bd37520d27fe]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_69a01.dir/']
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/as -mcpu=68000 -o CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccPsVGBb.s]
+        ignore line: [COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/]
+        ignore line: [LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.']
+        ignore line: [[2/2] : && /opt/retro68/bin/m68k-apple-macos-gcc  -v CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj -o cmTC_69a01   && :]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-gcc]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper]
+        ignore line: [Target: m68k-apple-macos]
+        ignore line: [Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing]
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.1.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/]
+        ignore line: [LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_69a01' '-mcpu=68000' '-dumpdir' 'cmTC_69a01.']
+        link line: [ /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/collect2 -plugin /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/liblto_plugin.so -plugin-opt=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//cctkMNFr.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lretrocrt -plugin-opt=-pass-through=-lInterface -elf2mac -q -undefined=_consolewrite -o cmTC_69a01 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj --start-group -lgcc -lc -lretrocrt -lInterface --end-group]
+          arg [/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//cctkMNFr.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lretrocrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lInterface] ==> ignore
+          arg [-elf2mac] ==> ignore
+          arg [-q] ==> ignore
+          arg [-undefined=_consolewrite] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_69a01] ==> ignore
+          arg [-L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0] ==> dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0]
+          arg [-L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib] ==> dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib]
+          arg [CMakeFiles/cmTC_69a01.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [--start-group] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lretrocrt] ==> lib [retrocrt]
+          arg [-lInterface] ==> lib [Interface]
+          arg [--end-group] ==> ignore
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_69a01' '-mcpu=68000' '-dumpdir' 'cmTC_69a01.']
+        ignore line: []
+        ignore line: []
+        collapse library dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0] ==> [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0]
+        collapse library dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib] ==> [/opt/retro68/m68k-apple-macos/lib]
+        implicit libs: [gcc;c;retrocrt;Interface]
+        implicit objs: []
+        implicit dirs: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0;/opt/retro68/m68k-apple-macos/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-AAqGRH"
+      binary: "/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-AAqGRH"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/opt/retro68/m68k-apple-macos/cmake;/opt/retro68/m68k-apple-macos/cmake"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-AAqGRH'
+        
+        Run Build Command(s): /usr/local/bin/ninja -v cmTC_e89c0
+        [1/2] /opt/retro68/bin/m68k-apple-macos-g++   -v -o CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj -c /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-g++
+        Target: m68k-apple-macos
+        Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.1.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_e89c0.dir/'
+         /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/cc1plus -quiet -v -Wno-trigraphs /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_e89c0.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=68000 -version -o /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccAdLpqb.s
+        GNU C++20 (GCC) version 16.1.0 (m68k-apple-macos)
+        	compiled by GNU C version Apple LLVM 21.0.0 (clang-2100.4.1.1), GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.4.1, isl version isl-0.28-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/sys-include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/m68k-apple-macos
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/backward
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include
+        End of search list.
+        Compiler executable checksum: b23f3b654778c11531f229e53c05d705
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_e89c0.dir/'
+         /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/as -mcpu=68000 -o CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccAdLpqb.s
+        COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/
+        LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.'
+        [2/2] : && /opt/retro68/bin/m68k-apple-macos-g++  -v CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_e89c0   && :
+        Using built-in specs.
+        COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-g++
+        COLLECT_LTO_WRAPPER=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper
+        Target: m68k-apple-macos
+        Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.1.0 (GCC) 
+        COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/
+        LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e89c0' '-mcpu=68000' '-dumpdir' 'cmTC_e89c0.'
+         /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/collect2 -plugin /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/liblto_plugin.so -plugin-opt=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//cc5V5Gko.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lretrocrt -plugin-opt=-pass-through=-lInterface -elf2mac -q -undefined=_consolewrite -o cmTC_e89c0 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm --start-group -lgcc -lc -lretrocrt -lInterface --end-group
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e89c0' '-mcpu=68000' '-dumpdir' 'cmTC_e89c0.'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:191 (message)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0]
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/m68k-apple-macos]
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/backward]
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include]
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed]
+          add: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include]
+        end of search list found
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0] ==> [/opt/retro68/m68k-apple-macos/include/c++/16.1.0]
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/m68k-apple-macos] ==> [/opt/retro68/m68k-apple-macos/include/c++/16.1.0/m68k-apple-macos]
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/backward] ==> [/opt/retro68/m68k-apple-macos/include/c++/16.1.0/backward]
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include] ==> [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include]
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed] ==> [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed]
+        collapse include dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include] ==> [/opt/retro68/m68k-apple-macos/include]
+        implicit include dirs: [/opt/retro68/m68k-apple-macos/include/c++/16.1.0;/opt/retro68/m68k-apple-macos/include/c++/16.1.0/m68k-apple-macos;/opt/retro68/m68k-apple-macos/include/c++/16.1.0/backward;/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include;/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed;/opt/retro68/m68k-apple-macos/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "/Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/Users/andyvand/Downloads/wxhearts/build-retro68/m68k/CMakeFiles/CMakeScratch/TryCompile-AAqGRH']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/ninja -v cmTC_e89c0]
+        ignore line: [[1/2] /opt/retro68/bin/m68k-apple-macos-g++   -v -o CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj -c /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-g++]
+        ignore line: [Target: m68k-apple-macos]
+        ignore line: [Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing]
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.1.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_e89c0.dir/']
+        ignore line: [ /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/cc1plus -quiet -v -Wno-trigraphs /Applications/CMake.app/Contents/share/cmake-4.0/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_e89c0.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=68000 -version -o /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccAdLpqb.s]
+        ignore line: [GNU C++20 (GCC) version 16.1.0 (m68k-apple-macos)]
+        ignore line: [	compiled by GNU C version Apple LLVM 21.0.0 (clang-2100.4.1.1)  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.4.1  isl version isl-0.28-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/sys-include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/m68k-apple-macos]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include/c++/16.1.0/backward]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/include-fixed]
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: b23f3b654778c11531f229e53c05d705]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_e89c0.dir/']
+        ignore line: [ /opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/as -mcpu=68000 -o CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj /var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//ccAdLpqb.s]
+        ignore line: [COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/]
+        ignore line: [LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=68000' '-dumpdir' 'CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [[2/2] : && /opt/retro68/bin/m68k-apple-macos-g++  -v CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_e89c0   && :]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/retro68/bin/m68k-apple-macos-g++]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper]
+        ignore line: [Target: m68k-apple-macos]
+        ignore line: [Configured with: /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing : (reconfigured) /Users/andyvand/Downloads/Retro68/gcc/configure --target=m68k-apple-macos --prefix=/opt/retro68 --enable-languages=c c++ --with-arch=m68k --with-cpu=m68000 --disable-libssp MAKEINFO=missing]
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.1.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/libexec/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/bin/]
+        ignore line: [LIBRARY_PATH=/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/:/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e89c0' '-mcpu=68000' '-dumpdir' 'cmTC_e89c0.']
+        link line: [ /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/collect2 -plugin /opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/liblto_plugin.so -plugin-opt=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//cc5V5Gko.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lretrocrt -plugin-opt=-pass-through=-lInterface -elf2mac -q -undefined=_consolewrite -o cmTC_e89c0 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0 -L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm --start-group -lgcc -lc -lretrocrt -lInterface --end-group]
+          arg [/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/retro68/libexec/gcc/m68k-apple-macos/16.1.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/var/folders/hq/s7n8_wx50wd3vxklqrz_yt6m0000gn/T//cc5V5Gko.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lretrocrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lInterface] ==> ignore
+          arg [-elf2mac] ==> ignore
+          arg [-q] ==> ignore
+          arg [-undefined=_consolewrite] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_e89c0] ==> ignore
+          arg [-L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0] ==> dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0]
+          arg [-L/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib] ==> dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib]
+          arg [CMakeFiles/cmTC_e89c0.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [--start-group] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lretrocrt] ==> lib [retrocrt]
+          arg [-lInterface] ==> lib [Interface]
+          arg [--end-group] ==> ignore
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e89c0' '-mcpu=68000' '-dumpdir' 'cmTC_e89c0.']
+        ignore line: []
+        ignore line: []
+        collapse library dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0] ==> [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0]
+        collapse library dir [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0/../../../../m68k-apple-macos/lib] ==> [/opt/retro68/m68k-apple-macos/lib]
+        implicit libs: [stdc++;m;gcc;c;retrocrt;Interface]
+        implicit objs: []
+        implicit dirs: [/opt/retro68/lib/gcc/m68k-apple-macos/16.1.0;/opt/retro68/m68k-apple-macos/lib]
+        implicit fwks: []
+      
+      
+...

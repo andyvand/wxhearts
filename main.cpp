@@ -24,6 +24,7 @@ Other CMainWindow member functions are in main2.cpp, welcome.cpp
 #include <wx/filename.h>
 #include <wx/utils.h>
 #include <wx/xrc/xmlres.h>
+#include "retro68/trace_retro68.h"
 #include "debug.h"
 
 #include <cstdlib>
@@ -31,6 +32,9 @@ Other CMainWindow member functions are in main2.cpp, welcome.cpp
 
 #ifdef __APPLE__
 extern "C" void ShowMacHelpBook(const char *anchor);
+#endif
+#ifdef __WXRETRO68__
+void ShowRetro68Help(wxWindow *parent);     // retro68/help_retro68.cpp
 #endif
 
 
@@ -124,6 +128,7 @@ CMainWindow::CMainWindow()
       m_badMoveTimer(this, 1001), m_dispatchTimer(this, 1002),
       m_myid(0), bAutostarted(false), bHasSound(false), bNetDdeActive(false)
 {
+    HTRACE("CMainWindow ctor");
     ::cQdMoves = 0;                 // no moves in move queue
     ::cQdPasses = 0;                // no passes either
 
@@ -161,10 +166,12 @@ CMainWindow::CMainWindow()
     // Set window icon (title bar / taskbar / dock where applicable).
     // On macOS, the Dock/Finder icon comes from the bundle's .icns file;
     // on Windows and Linux this sets the frame icon from the embedded PNG.
+    HTRACE("load icon");
     wxIcon appIcon = wxXmlResource::Get()->LoadIcon(wxT("APP_ICON"));
     if (appIcon.IsOk())
         SetIcon(appIcon);
 
+    HTRACE("icon done");
     // Create menu bar
 
     wxMenuBar *menuBar = new wxMenuBar;
@@ -188,10 +195,12 @@ CMainWindow::CMainWindow()
     menuBar->Append(helpMenu, wxT("&Help"));
     SetMenuBar(menuBar);
 
+    HTRACE("menu bar set");
     // Create status bar
 
     CreateStatusBar();
     SetStatusText(GetStringResource(IDS_INTRO));
+    HTRACE("status bar set");
 
     // Now that the menubar and status bar exist, pin the *client*
     // area to WINWIDTH x WINHEIGHT.  On GTK/Linux the menu bar and
@@ -212,6 +221,35 @@ CMainWindow::CMainWindow()
     // This keeps the Game/Help wxMenuBar (a per-window QMenuBar under wxQt,
     // not a global menu bar) visible and tappable at the top of the window.
     Maximize(true);
+#elif defined(__WXRETRO68__)
+    // Classic Macs commonly have 512x342, 640x480 or 832x624 screens, too
+    // small for the 540x600 board plus title bar, menu and status bar.
+    // Shrink the window (keeping the aspect ratio) to fit the screen; the
+    // backbuffer StretchBlit in OnPaint scales the board to match, and the
+    // user can still grow it on a bigger screen.
+    {
+        wxRect avail = wxGetClientDisplayRect();
+        wxSize decor = GetSize() - GetClientSize();     // title, menu, status
+        int maxW = avail.width  - decor.x - 8;
+        int maxH = avail.height - decor.y - 8;
+        int cw = WINWIDTH, ch = WINHEIGHT;
+        if (maxW > 0 && maxH > 0 && (cw > maxW || ch > maxH))
+        {
+            if (maxW * WINHEIGHT < maxH * WINWIDTH)
+            {
+                cw = maxW;
+                ch = maxW * WINHEIGHT / WINWIDTH;
+            }
+            else
+            {
+                ch = maxH;
+                cw = maxH * WINWIDTH / WINHEIGHT;
+            }
+        }
+        SetClientSize(cw, ch);
+        SetMinClientSize(wxSize(WINWIDTH / 2, WINHEIGHT / 2));
+        Move(avail.x + (avail.width - GetSize().x) / 2, avail.y + 4);
+    }
 #else
     SetClientSize(WINWIDTH, WINHEIGHT);
 
@@ -224,6 +262,7 @@ CMainWindow::CMainWindow()
     SetMinClientSize(wxSize(WINWIDTH, WINHEIGHT));
 #endif
 
+    HTRACE("window sized %dx%d", GetClientSize().x, GetClientSize().y);
     // Accelerator table
 
     wxAcceleratorEntry accel[7];
@@ -263,6 +302,7 @@ CMainWindow::CMainWindow()
     // on first paint; we pre-fill here so the window isn't white for
     // the instant between show and first paint.
     m_backbuffer = wxBitmap(WINWIDTH, WINHEIGHT);
+    HTRACE("backbuffer %d", (int)m_backbuffer.IsOk());
     if (m_backbuffer.IsOk())
     {
         wxMemoryDC mdc;
@@ -281,6 +321,7 @@ CMainWindow::CMainWindow()
 
     pMainWnd = this;
     p[0] = new local_human(0);
+    HTRACE("player 0 created");
     if (!p[0])
     {
         bConstructed = false;
@@ -304,6 +345,7 @@ CMainWindow::CMainWindow()
 
     RegEntry Reg(szRegPath);
     bHasSound = SoundInit();
+    HTRACE("sound init %d", (int)bHasSound);
     if (bHasSound && Reg.GetNumber(regvalSound, 1))
     {
         GetMenuBar()->Check(IDM_SOUND, true);
@@ -330,6 +372,7 @@ CMainWindow::CMainWindow()
         nStepSize = 15;
 
     c.SetStepSize(nStepSize);
+    HTRACE("CMainWindow ctor done");
 }
 
 
@@ -384,6 +427,8 @@ void CMainWindow::OnHelpTopics(wxCommandEvent &event)
 {
 #ifdef __APPLE__
     ShowMacHelpBook(nullptr);
+#elif defined(__WXRETRO68__)
+    ShowRetro68Help(this);
 #else
     const wxString resDir = wxStandardPaths::Get().GetResourcesDir();
 
