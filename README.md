@@ -10,6 +10,12 @@ A cross-platform port of Microsoft Hearts built with [wxWidgets](https://www.wxw
 ### macOS
 ![macOS screenshot](/screenshots/wxhearts_macOS.png)
 
+### Mac OS 7.5.X (m68k)
+![Mac OS 7.5.X screenshot](/screenshots/wxhearts_MacOS_m68K.png)
+
+### Mac OS 9.X (ppc)
+![Mac OS 9.X screenshot](/screenshots/wxhearts_MacOS_ppc.png)
+
 ### Linux
 ![Linux screenshot](/screenshots/wxhearts_linux.png)
 
